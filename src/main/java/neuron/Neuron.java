@@ -21,4 +21,8 @@ public class Neuron {
         return axon;
     }
 
+    public void fireAxon() {
+        this.axon.fire();
+    }
+
 }

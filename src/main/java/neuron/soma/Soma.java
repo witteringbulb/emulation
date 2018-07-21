@@ -22,6 +22,12 @@ public abstract class Soma {
         this.dendrites = connectedDendrites;
     }
 
+    public void fireAxonIfRequired() {
+        if (doesAxonFireAtNextTimeIncrement()) {
+            this.parentNeuron.fireAxon();
+        }
+    }
+
     public abstract boolean doesAxonFireAtNextTimeIncrement();
 
     public double sumSignalsFromEndsOfDendritesForThisTimeIncrement() {
