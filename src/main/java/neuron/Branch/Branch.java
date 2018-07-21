@@ -11,13 +11,17 @@ public abstract class Branch<T extends Signal> {
 
     private List<T> signals;
 
-    public void propagateSignals() {
+    public void propagateSignalsOneTimeIncrement() {
         for (Signal signal : signals) {
             if (signal.hasFullyPassedPosition(length)) {
                 signals.remove(signal);
             }
-            signal.propagate();
+            signal.propagateOneTimeIncrement();
         }
+    }
+
+    public double getSignalMagnitudeAtEndOfBranch() {
+        return signals.stream().mapToDouble(signal -> signal.getSignalStrengthAtLocation(length)).sum();
     }
 
     public double getOrientationInRadians() {

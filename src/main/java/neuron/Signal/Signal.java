@@ -7,7 +7,7 @@ public abstract class Signal {
 
     private double distanceFromSignalMeanToSignalOrigin = 0;
 
-    public void propagate() {
+    public void propagateOneTimeIncrement() {
         this.updateDistanceFromSignalMeanToSignalOrigin();
     }
 
