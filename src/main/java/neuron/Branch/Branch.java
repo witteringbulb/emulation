@@ -11,13 +11,6 @@ public abstract class Branch<T extends Signal> {
 
     private List<T> signals;
 
-
-    public Branch(double orientationInRadians,
-                  double length) {
-        this.orientationInRadians = orientationInRadians;
-        this.length = length;
-    }
-
     public void propagateSignals() {
         for (Signal signal : signals) {
             if (signal.hasFullyPassedPosition(length)) {
@@ -31,8 +24,12 @@ public abstract class Branch<T extends Signal> {
         return this.orientationInRadians;
     }
 
+    public void setOrientationInRadians(double orientationInRadians) { this.orientationInRadians = orientationInRadians; }
+
     public double getLength() {
         return length;
     }
+
+    public void setLength(double length) { this.length = length; }
 
 }
