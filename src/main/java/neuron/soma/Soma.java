@@ -14,6 +14,7 @@ public abstract class Soma {
     }
 
     private Pair<Double, Double> somaLocation;
+
     private List<Dendrite> dendrites;
 
     public Soma(Pair<Double, Double> somaLocation, List<Dendrite> connectedDendrites) {
@@ -21,16 +22,20 @@ public abstract class Soma {
         this.dendrites = connectedDendrites;
     }
 
-    public boolean doesAxonFireAtNextTimeIncrement() {
-        return combineSignalsFromEndsOfDendritesForThisTimeIncrement();
-    }
+    public abstract boolean doesAxonFireAtNextTimeIncrement();
 
-    public abstract boolean combineSignalsFromEndsOfDendritesForThisTimeIncrement();
+    public double sumSignalsFromEndsOfDendritesForThisTimeIncrement() {
+        return this.getDendrites().stream()
+                .mapToDouble(dendrite -> dendrite.getSignalMagnitudeAtEndOfBranch())
+                .sum();
+    }
 
     public void setDendrites(List<Dendrite> dendrites) {
         this.dendrites = dendrites;
     }
 
-
+    public List<Dendrite> getDendrites() {
+        return dendrites;
+    }
 
 }
