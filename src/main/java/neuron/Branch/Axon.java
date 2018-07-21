@@ -13,4 +13,9 @@ public class Axon extends Branch {
         super(orientationInRadians, length);
     }
 
+    public void setAxonTerminals(List<AxonTerminal> axonTerminals) {
+        this.axonTerminals = axonTerminals;
+    }
+
+
 }
