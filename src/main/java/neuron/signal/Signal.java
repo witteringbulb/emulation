@@ -7,6 +7,14 @@ public abstract class Signal {
 
     private double distanceFromSignalMeanToSignalOrigin = 0;
 
+    private double width;
+    private double displacement;
+
+    public Signal(double width, double displacement) {
+        this.width = width;
+        this.displacement = displacement;
+    }
+
     public void propagateOneTimeIncrement() {
         this.updateDistanceFromSignalMeanToSignalOrigin();
     }
@@ -35,5 +43,9 @@ public abstract class Signal {
     public double getDistanceFromSignalMeanToSignalOrigin() {
         return distanceFromSignalMeanToSignalOrigin;
     }
+
+    public double getWidth() { return width; }
+
+    public double getDisplacement() { return displacement; }
 
 }

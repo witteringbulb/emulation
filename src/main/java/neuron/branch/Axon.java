@@ -6,15 +6,22 @@ import java.util.List;
 
 public class Axon<T extends Signal> extends Branch {
 
+    public Axon(double orientationInRadians,
+                    double length,
+                    Class<T> signalType,
+                    double signalWidth,
+                    double signalDisplacement) {
+        super(orientationInRadians, length, signalType, signalWidth, signalDisplacement);
+    }
+
     private List<AxonTerminal> axonTerminals;
-    private List<T> signals;
 
     public void setAxonTerminals(List<AxonTerminal> axonTerminals) {
         this.axonTerminals = axonTerminals;
     }
 
     public void fire() {
-        this.signals.add();
+        this.addSignal();
     }
 
 }
