@@ -9,6 +9,7 @@ import main.java.neuron.branch.AxonTerminal;
 import main.java.neuron.branch.Branch;
 import main.java.neuron.branch.Dendrite;
 import main.java.neuron.Neuron;
+import main.java.neuron.soma.Soma;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,9 +19,8 @@ public class NeuronGenerator{
 
     private static final double BRANCH_ROTATION_OFFSET = 0.0;
 
-    public static Neuron generateNeuronWithUniformBranches(Pair<Double, Double> somaLocation,
-                                                             int axonOrientationInRadians,
-                                                             int axonLength,
+    public static Neuron generateNeuronWithUniformBranches(Soma soma,
+                                                             Axon axon,
                                                              int numberOfDendrites,
                                                              double lengthOfDendrites,
                                                              int numberOfAxonTerminals,
@@ -31,17 +31,15 @@ public class NeuronGenerator{
         List<AxonTerminal> axonTerminals = generateEvenlyRotationallySpacedBranchesWithFixedLengths(numberOfAxonTerminals,
                                                                                                     lengthOfAxonTerminals,
                                                                                                     AxonTerminal.class);
-        return generateNeuron(somaLocation, axonOrientationInRadians, axonLength, dendrites, axonTerminals);
+        return generateNeuron(soma, axon, dendrites, axonTerminals);
     }
 
-    public static Neuron generateNeuron(Pair<Double, Double> somaLocation,
-                                        int axonOrientationInRadians,
-                                        int axonLength,
+    public static Neuron generateNeuron(Soma soma,
+                                        Axon axon,
                                         List<Dendrite> dendrites,
                                         List<AxonTerminal> axonTerminals) {
-        Neuron neuron = new Neuron(somaLocation);
-        neuron.setDendrites(dendrites);
-        neuron.setAxon(new Axon(axonOrientationInRadians, axonLength));
+        Neuron neuron = new Neuron(soma, axon);
+        neuron.getSoma().setDendrites(dendrites);
         neuron.getAxon().setAxonTerminals(axonTerminals);
         return neuron;
     }

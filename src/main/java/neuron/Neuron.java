@@ -1,36 +1,24 @@
 package main.java.neuron;
 
-import javafx.util.Pair;
 import main.java.neuron.branch.Axon;
-import main.java.neuron.branch.Dendrite;
-
-import java.util.List;
+import main.java.neuron.soma.Soma;
 
 public class Neuron {
 
-    private Pair<Double, Double> somaLocation;
-
+    private Soma soma;
     private Axon axon;
-    private List<Dendrite> dendrites;
 
-    public Neuron(Pair<Double, Double> somaLocation) {
-        this.somaLocation = somaLocation;
-    }
-
-    public Axon getAxon() {
-        return axon;
-    }
-
-    public void setAxon(Axon axon) {
+    public Neuron(Soma soma, Axon axon) {
+        this.soma = soma;
+        soma.setParentNeuron(this);
         this.axon = axon;
     }
 
-    public List<Dendrite> getDendrites() {
-        return dendrites;
+    public Soma getSoma() {
+        return soma;
     }
-
-    public void setDendrites(List<Dendrite> dendrites) {
-        this.dendrites = dendrites;
+    public Axon getAxon() {
+        return axon;
     }
 
 }
