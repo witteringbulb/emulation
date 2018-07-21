@@ -36,10 +36,6 @@ public abstract class Soma {
                 .sum();
     }
 
-    public void setDendrites(List<Dendrite> dendrites) {
-        this.dendrites = dendrites;
-    }
-
     public List<Dendrite> getDendrites() {
         return dendrites;
     }
