@@ -10,15 +10,13 @@ public class Axon<T extends Signal> extends Branch {
                     double length,
                     Class<T> signalType,
                     double signalWidth,
-                    double signalDisplacement) {
+                    double signalDisplacement,
+                    List<AxonTerminal> axonTerminals) {
         super(orientationInRadians, length, signalType, signalWidth, signalDisplacement);
+        this.axonTerminals = axonTerminals;
     }
 
     private List<AxonTerminal> axonTerminals;
-
-    public void setAxonTerminals(List<AxonTerminal> axonTerminals) {
-        this.axonTerminals = axonTerminals;
-    }
 
     public void fire() {
         this.addSignal();

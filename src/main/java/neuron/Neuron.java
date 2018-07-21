@@ -11,11 +11,10 @@ public class Neuron {
     private Soma soma;
     private Axon axon;
 
-    public Neuron(Soma soma, Axon axon, List<AxonTerminal> axonTerminals) {
+    public Neuron(Soma soma, Axon axon) {
         this.soma = soma;
         soma.setParentNeuron(this);
         this.axon = axon;
-        this.axon.setAxonTerminals(axonTerminals);
     }
 
     public Soma getSoma() {
