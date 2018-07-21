@@ -1,6 +1,6 @@
-package main.java.generators.Factories;
+package main.java.generators.factories;
 
-import main.java.neuron.Branch.Dendrite;
+import main.java.neuron.branch.Dendrite;
 
 public class DendriteFactory implements BranchFactory<Dendrite> {
 

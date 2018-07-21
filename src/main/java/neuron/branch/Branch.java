@@ -1,6 +1,6 @@
-package main.java.neuron.Branch;
+package main.java.neuron.branch;
 
-import main.java.neuron.Signal.Signal;
+import main.java.neuron.signal.Signal;
 
 import java.util.List;
 

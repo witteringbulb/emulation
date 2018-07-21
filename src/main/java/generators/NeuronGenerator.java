@@ -1,13 +1,13 @@
 package main.java.generators;
 
 import javafx.util.Pair;
-import main.java.generators.Factories.AxonTerminalFactory;
-import main.java.generators.Factories.BranchFactory;
-import main.java.generators.Factories.DendriteFactory;
-import main.java.neuron.Branch.Axon;
-import main.java.neuron.Branch.AxonTerminal;
-import main.java.neuron.Branch.Branch;
-import main.java.neuron.Branch.Dendrite;
+import main.java.generators.factories.AxonTerminalFactory;
+import main.java.generators.factories.BranchFactory;
+import main.java.generators.factories.DendriteFactory;
+import main.java.neuron.branch.Axon;
+import main.java.neuron.branch.AxonTerminal;
+import main.java.neuron.branch.Branch;
+import main.java.neuron.branch.Dendrite;
 import main.java.neuron.Neuron;
 
 import java.util.ArrayList;
@@ -74,7 +74,7 @@ public class NeuronGenerator{
         } else if (branchType == AxonTerminal.class) {
             return new AxonTerminalFactory();
         } else {
-            throw new IllegalArgumentException("Branch Type not recognised");
+            throw new IllegalArgumentException("branch Type not recognised");
         }
     }
 

@@ -1,7 +1,4 @@
-package main.java.neuron.Branch;
-
-import main.java.neuron.Branch.AxonTerminal;
-import main.java.neuron.Branch.Branch;
+package main.java.neuron.branch;
 
 import java.util.List;
 

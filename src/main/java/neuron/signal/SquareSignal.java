@@ -1,4 +1,4 @@
-package main.java.neuron.Signal;
+package main.java.neuron.signal;
 
 public class SquareSignal extends Signal {
 

@@ -1,6 +1,6 @@
-package main.java.generators.Factories;
+package main.java.generators.factories;
 
-import main.java.neuron.Branch.Branch;
+import main.java.neuron.branch.Branch;
 
 public interface BranchFactory<T extends Branch> {
 
