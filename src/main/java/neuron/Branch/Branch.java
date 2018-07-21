@@ -14,6 +14,8 @@ public abstract class Branch {
         this.length = length;
     }
 
+    public abstract void propagateSignal();
+
     public double getOrientationInRadians() {
         return this.orientationInRadians;
     }
