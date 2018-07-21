@@ -3,6 +3,7 @@ package main.java.neuron.branch;
 import main.java.neuron.factories.SignalFactory;
 import main.java.neuron.signal.Signal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Branch<T extends Signal> {
@@ -14,7 +15,7 @@ public abstract class Branch<T extends Signal> {
     private double signalWidth;
     private double signalDisplacement;
 
-    private List<T> signals;
+    private List<T> signals = new ArrayList<T>();
 
     public Branch(double orientationInRadians,
                   double length,
