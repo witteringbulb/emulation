@@ -5,28 +5,23 @@ import java.util.List;
 
 import neuron.factories.SignalFactory;
 import neuron.signal.Signal;
+import neuron.signal.SignalType;
 
 public abstract class Branch<T extends Signal> {
 
     private double orientationInRadians;
     private double length;
 
-    private Class signalType;
-    private double signalWidth;
-    private double signalDisplacement;
+    private SignalType signalType;
 
     private List<T> signals = new ArrayList<T>();
 
     public Branch(double orientationInRadians,
                   double length,
-                  Class<T> signalType,
-                  double signalWidth,
-                  double signalDisplacement) {
+                  SignalType signalType) {
         this.orientationInRadians = orientationInRadians;
         this.length = length;
         this.signalType = signalType;
-        this.signalWidth = signalWidth;
-        this.signalDisplacement = signalDisplacement;
     }
 
     public void propagateSignalsOneTimeIncrement() {
@@ -39,7 +34,7 @@ public abstract class Branch<T extends Signal> {
     }
 
     public void addSignal() {
-        signals.add( (T) SignalFactory.getSignal(signalType, this.signalWidth, this.signalDisplacement));
+        signals.add( (T) SignalFactory.getSignal(signalType));
     }
 
     public double getSignalMagnitudeAtEndOfBranch() {

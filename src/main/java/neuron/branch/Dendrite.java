@@ -1,15 +1,13 @@
 package neuron.branch;
 
-import neuron.signal.Signal;
+import neuron.signal.SignalType;
 
-public class Dendrite<T extends Signal> extends Branch {
+public class Dendrite extends Branch {
 
     public Dendrite(double orientationInRadians,
                      double length,
-                     Class<T> signalType,
-                     double signalWidth,
-                     double signalDisplacement) {
-        super(orientationInRadians, length, signalType, signalWidth, signalDisplacement);
+                     SignalType signalType) {
+        super(orientationInRadians, length, signalType);
     }
 
 }

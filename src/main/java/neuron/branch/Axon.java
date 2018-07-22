@@ -1,18 +1,15 @@
 package neuron.branch;
 
-import neuron.signal.Signal;
+import neuron.signal.SignalType;
 
 import java.util.List;
 
-public class Axon<T extends Signal> extends Branch {
+public class Axon extends Branch {
 
     public Axon(double orientationInRadians,
-                    double length,
-                    Class<T> signalType,
-                    double signalWidth,
-                    double signalDisplacement,
-                    List<AxonTerminal> axonTerminals) {
-        super(orientationInRadians, length, signalType, signalWidth, signalDisplacement);
+                double length,
+                SignalType signalType) {
+        super(orientationInRadians, length, signalType);
         this.axonTerminals = axonTerminals;
     }
 

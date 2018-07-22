@@ -1,14 +1,12 @@
 package neuron.builders;
 
 import neuron.branch.AxonTerminal;
-import neuron.signal.Signal;
+import neuron.signal.SignalType;
 
-public class AxonTerminalBuilder<T extends Signal> {
+public class AxonTerminalBuilder {
     private double orientationInRadians;
     private double length;
-    private Class<T> signalType;
-    private double signalWidth;
-    private double signalDisplacement;
+    private SignalType signalType;
 
     public AxonTerminalBuilder setOrientationInRadians(double orientationInRadians) {
         this.orientationInRadians = orientationInRadians;
@@ -20,22 +18,12 @@ public class AxonTerminalBuilder<T extends Signal> {
         return this;
     }
 
-    public AxonTerminalBuilder setSignalType(Class<T> signalType) {
+    public AxonTerminalBuilder setSignalType(SignalType signalType) {
         this.signalType = signalType;
         return this;
     }
 
-    public AxonTerminalBuilder setSignalWidth(double signalWidth) {
-        this.signalWidth = signalWidth;
-        return this;
-    }
-
-    public AxonTerminalBuilder setSignalDisplacement(double signalDisplacement) {
-        this.signalDisplacement = signalDisplacement;
-        return this;
-    }
-
     public AxonTerminal createAxonTerminal() {
-        return new AxonTerminal(orientationInRadians, length, signalType, signalWidth, signalDisplacement);
+        return new AxonTerminal(orientationInRadians, length, signalType);
     }
 }

@@ -1,14 +1,12 @@
 package neuron.builders;
 
 import neuron.branch.Dendrite;
-import neuron.signal.Signal;
+import neuron.signal.SignalType;
 
-public class DendriteBuilder<T extends Signal> {
+public class DendriteBuilder {
     private double orientationInRadians;
     private double length;
-    private Class<T> signalType;
-    private double signalWidth;
-    private double signalDisplacement;
+    private SignalType signalType;
 
     public DendriteBuilder setOrientationInRadians(double orientationInRadians) {
         this.orientationInRadians = orientationInRadians;
@@ -20,22 +18,12 @@ public class DendriteBuilder<T extends Signal> {
         return this;
     }
 
-    public DendriteBuilder setSignalType(Class<T> signalType) {
+    public DendriteBuilder setSignalType(SignalType signalType) {
         this.signalType = signalType;
         return this;
     }
 
-    public DendriteBuilder setSignalWidth(double signalWidth) {
-        this.signalWidth = signalWidth;
-        return this;
-    }
-
-    public DendriteBuilder setSignalDisplacement(double signalDisplacement) {
-        this.signalDisplacement = signalDisplacement;
-        return this;
-    }
-
     public Dendrite createDendrite() {
-        return new Dendrite(orientationInRadians, length, signalType, signalWidth, signalDisplacement);
+        return new Dendrite(orientationInRadians, length, signalType);
     }
 }
