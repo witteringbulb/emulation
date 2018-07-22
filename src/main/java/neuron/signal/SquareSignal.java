@@ -2,8 +2,8 @@ package neuron.signal;
 
 public class SquareSignal extends Signal {
 
-    public SquareSignal(double width, double displacement) {
-        super(width, displacement);
+    public SquareSignal(double width, double displacement, double amplitude) {
+        super(width, displacement, amplitude);
     }
 
     public double signalDistributionFunction(double position) {

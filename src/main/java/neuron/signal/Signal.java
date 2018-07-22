@@ -4,15 +4,16 @@ import defaults.DefaultValues;
 
 public abstract class Signal {
 
-    private double distanceFromSignalMeanToSignalOrigin = 0;
+    private double distanceFromSignalMeanToSignalOrigin = 0.0;
 
-    private static final double amplitude = DefaultValues.DEFAULT_SIGNAL_AMPLITUDE;
+    private double amplitude;
     private double width;
     private double displacement;
 
-    public Signal(double width, double displacement) {
+    public Signal(double width, double displacement, double amplitude) {
         this.width = width;
         this.displacement = displacement;
+        this.amplitude = amplitude;
     }
 
     public void propagateOneTimeIncrement() {
@@ -23,12 +24,6 @@ public abstract class Signal {
         this.distanceFromSignalMeanToSignalOrigin += DefaultValues.DEFAULT_SIGNAL_VELOCITY;
     }
 
-    /**
-     * Calculates the strength of this signal, using the signal's distribution around its mean
-     *
-     * @param position The position at which you want to calculate the signal strength.
-     *                 This will usually be the end of the branch
-     */
     public double getSignalStrengthAtLocation(double position) {
         return this.amplitude * signalDistributionFunction(position);
     }

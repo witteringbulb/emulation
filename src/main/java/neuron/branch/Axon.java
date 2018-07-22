@@ -17,6 +17,10 @@ public class Axon extends Branch {
         this.axonTerminals = axonTerminals;
     }
 
+    public void fire() {
+        this.addSignal(DefaultValues.DEFAULT_SIGNAL_AMPLITUDE);
+    }
+
     public void propagateAxonAndAxonTerminalSignalsForwardOneTimeIncrement() {
         this.propagateSignalsOneTimeIncrement();
         this.axonTerminals.forEach(axonTerminal -> axonTerminal.propagateSignalsOneTimeIncrement());
@@ -24,6 +28,10 @@ public class Axon extends Branch {
         if (this.getSignalMagnitudeAtEndOfBranch() > DefaultValues.DEFAULT_AXON_TERMINAL_FIRE_THRESHOLD) {
             this.axonTerminals.forEach(axonTerminal -> axonTerminal.fire());
         }
+    }
+
+    public List<AxonTerminal> getAxonTerminals() {
+        return this.axonTerminals;
     }
 
 }

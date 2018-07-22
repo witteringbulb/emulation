@@ -10,4 +10,8 @@ public class Dendrite extends Branch {
         super(orientationInRadians, length, signalType);
     }
 
+    public void fire(double amplitude) {
+        this.addSignal(amplitude);
+    }
+
 }
