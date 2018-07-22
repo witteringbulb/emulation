@@ -15,21 +15,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class NeuronTest {
 
-    Neuron neuron;
+    private Neuron neuron;
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
 
         Dendrite dendrite1 = new Dendrite(0.5, 1.5, SignalType.SQUARE_SIGNAL_DEFAULT);
         Dendrite dendrite2 = new Dendrite(1.3, 1.0, SignalType.SQUARE_SIGNAL_DEFAULT);
-        List<Dendrite> dendrites = new ArrayList<Dendrite>();
+        List<Dendrite> dendrites = new ArrayList<>();
         dendrites.add(dendrite1);
         dendrites.add(dendrite2);
-        Soma soma = new HeavisideSoma(new Pair<Double, Double>(1.0, 0.5), dendrites, 0.5);
+        Soma soma = new HeavisideSoma(new double[]{1.0, 0.5}, dendrites, 0.5);
 
         AxonTerminal axonTerminal1 = new AxonTerminal(0.2, 1.1, SignalType.SQUARE_SIGNAL_DEFAULT);
         AxonTerminal axonTerminal2 = new AxonTerminal(0.6, 2.1, SignalType.SQUARE_SIGNAL_DEFAULT);
-        List<AxonTerminal> axonTerminals = new ArrayList<AxonTerminal>();
+        List<AxonTerminal> axonTerminals = new ArrayList<>();
         axonTerminals.add(axonTerminal1);
         axonTerminals.add(axonTerminal2);
         Axon axon = new Axon(0.9, 5.3, SignalType.SQUARE_SIGNAL_DEFAULT, axonTerminals);
@@ -43,7 +43,7 @@ class NeuronTest {
         assertEquals(0.5, neuron.getSoma().getDendrites().get(0).getOrientationInRadians());
         assertEquals(1.0, neuron.getSoma().getDendrites().get(1).getLength());
 
-        //TODO: Add more
+        assertEquals(neuron.getSoma().getSomaLocation()[0], 1.0);
     }
 
     @Test

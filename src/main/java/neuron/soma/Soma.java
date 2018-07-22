@@ -13,11 +13,15 @@ public abstract class Soma {
         this.parentNeuron = neuron;
     }
 
-    private Pair<Double, Double> somaLocation;
+    private double[] somaLocation ;
 
     private List<Dendrite> dendrites;
 
-    public Soma(Pair<Double, Double> somaLocation, List<Dendrite> connectedDendrites) {
+    public Soma(double[] somaLocation, List<Dendrite> connectedDendrites) {
+        if (somaLocation.length != 2) {
+            throw new IllegalArgumentException(
+                    "somaLocation coordinates must be supplied as an array of length 2");
+        }
         this.somaLocation = somaLocation;
         this.dendrites = connectedDendrites;
     }
@@ -43,6 +47,10 @@ public abstract class Soma {
 
     public List<Dendrite> getDendrites() {
         return dendrites;
+    }
+
+    public double[] getSomaLocation() {
+        return somaLocation;
     }
 
 }
