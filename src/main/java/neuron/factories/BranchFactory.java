@@ -1,19 +1,19 @@
-package main.java.neuron.factories;
+package neuron.factories;
 
-import main.java.neuron.branch.AxonTerminal;
-import main.java.neuron.branch.Branch;
-import main.java.neuron.branch.Dendrite;
+import neuron.branch.AxonTerminal;
+import neuron.branch.Branch;
+import neuron.branch.Dendrite;
 
 public class BranchFactory {
 
     public static Branch getBranch(Class branchType,
-                            double orientationInRadians,
-                            double length,
-                            Class signalType,
-                            double signalWidth,
-                            double signalDisplacement) {
+                                   double orientationInRadians,
+                                   double length,
+                                   Class signalType,
+                                   double signalWidth,
+                                   double signalDisplacement) {
         if (branchType == Dendrite.class) {
-            return new Dendrite(orientationInRadians, length, signalType, signalWidth, signalDisplacement);
+            return dendriteBuilder.build()(orientationInRadians, length, signalType, signalWidth, signalDisplacement);
         } else if (branchType == AxonTerminal.class) {
             return new AxonTerminal(orientationInRadians, length, signalType, signalWidth, signalDisplacement);
         } else {

@@ -1,7 +1,9 @@
-package main.java.neuron.branch;
+package neuron.branch;
 
-import main.java.neuron.signal.Signal;
+import lombok.Builder;
+import neuron.signal.Signal;
 
+@Builder
 public class Dendrite<T extends Signal> extends Branch {
 
     public Dendrite(double orientationInRadians,

@@ -1,7 +1,7 @@
-package main.java.neuron.factories;
+package neuron.factories;
 
-import main.java.neuron.signal.Signal;
-import main.java.neuron.signal.SquareSignal;
+import neuron.signal.Signal;
+import neuron.signal.SquareSignal;
 
 public class SignalFactory {
 

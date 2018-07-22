@@ -1,11 +1,13 @@
-package main.java.neuron.branch;
-
-import main.java.neuron.factories.SignalFactory;
-import main.java.neuron.signal.Signal;
+package neuron.branch;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Builder;
+import neuron.factories.SignalFactory;
+import neuron.signal.Signal;
+
+@Builder
 public abstract class Branch<T extends Signal> {
 
     private double orientationInRadians;

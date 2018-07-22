@@ -1,4 +1,4 @@
-package main.java.neuron.signal;
+package neuron.signal;
 
 public abstract class Signal {
 

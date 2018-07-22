@@ -1,8 +1,8 @@
-package main.java.neuron.soma;
+package neuron.soma;
 
 import javafx.util.Pair;
 import main.java.neuron.Neuron;
-import main.java.neuron.branch.Dendrite;
+import neuron.branch.Dendrite;
 
 import java.util.List;
 
