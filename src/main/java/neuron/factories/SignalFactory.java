@@ -7,7 +7,7 @@ import neuron.signal.SquareSignal;
 public class SignalFactory {
 
     public static Signal getSignal(SignalType signalType, double amplitude) {
-        Class signalClass = signalType.getClass();
+        Class signalClass = signalType.getSignalClass();
         double width = signalType.getWidth();
         double displacement = signalType.getDisplacement();
 

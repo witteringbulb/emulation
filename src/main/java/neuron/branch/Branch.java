@@ -1,6 +1,7 @@
 package neuron.branch;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import neuron.factories.SignalFactory;
@@ -29,11 +30,13 @@ public abstract class Branch<T extends Signal> {
     }
 
     public void propagateSignalsOneTimeIncrement() {
-        for (Signal signal : signals) {
-            if (signal.hasFullyPassedPosition(length)) {
-                signals.remove(signal);
-            }
+        Iterator<T> signalsIterator = signals.iterator();
+        while (signalsIterator.hasNext()) {
+            Signal signal = signalsIterator.next();
             signal.propagateOneTimeIncrement();
+            if (signal.hasFullyPassedPosition(length)) {
+                signalsIterator.remove();
+            }
         }
     }
 
