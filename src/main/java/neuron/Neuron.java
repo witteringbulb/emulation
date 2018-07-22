@@ -1,10 +1,7 @@
 package main.java.neuron;
 
 import main.java.neuron.branch.Axon;
-import main.java.neuron.branch.AxonTerminal;
 import main.java.neuron.soma.Soma;
-
-import java.util.List;
 
 public class Neuron {
 
