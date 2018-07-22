@@ -1,12 +1,12 @@
 package neuron.signal;
 
-public abstract class Signal {
+import defaults.DefaultValues;
 
-    private final double VELOCITY = 1.0; //TODO: Set appropriate value
-    private final double ZERO_SIGNAL_THRESH = 0.1; //TODO: set appropriate value
+public abstract class Signal {
 
     private double distanceFromSignalMeanToSignalOrigin = 0;
 
+    private static final double amplitude = DefaultValues.DEFAULT_SIGNAL_AMPLITUDE;
     private double width;
     private double displacement;
 
@@ -20,7 +20,7 @@ public abstract class Signal {
     }
 
     private void updateDistanceFromSignalMeanToSignalOrigin() {
-        this.distanceFromSignalMeanToSignalOrigin += VELOCITY;
+        this.distanceFromSignalMeanToSignalOrigin += DefaultValues.DEFAULT_SIGNAL_VELOCITY;
     }
 
     /**
@@ -30,12 +30,12 @@ public abstract class Signal {
      *                 This will usually be the end of the branch
      */
     public double getSignalStrengthAtLocation(double position) {
-        return signalDistributionFunction(position);
+        return this.amplitude * signalDistributionFunction(position);
     }
 
     public boolean hasFullyPassedPosition(double position) {
         return this.getDistanceFromSignalMeanToSignalOrigin() > position
-                && this.getSignalStrengthAtLocation(position) < ZERO_SIGNAL_THRESH;
+                && this.getSignalStrengthAtLocation(position) < DefaultValues.DEFAULT_ZERO_SIGNAL_THRESH;
     }
 
     public abstract double signalDistributionFunction(double position);

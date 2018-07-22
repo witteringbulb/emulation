@@ -1,4 +1,4 @@
-package main.java.neuron;
+package neuron;
 
 import neuron.branch.Axon;
 import neuron.soma.Soma;
@@ -14,15 +14,20 @@ public class Neuron {
         this.axon = axon;
     }
 
+    public void fireAxon() {
+        this.axon.fire();
+    }
+
+    public void propagateSignalsOneTimeIncrement() {
+        this.getSoma().propagateDendriteSignalsOneTimeIncrementAndFireAxonIfRequired(); //Needs to fire axon if need be
+        this.getAxon().propagateAxonAndAxonTerminalSignalsForwardOneTimeIncrement();
+    }
+
     public Soma getSoma() {
         return soma;
     }
     public Axon getAxon() {
         return axon;
-    }
-
-    public void fireAxon() {
-        this.axon.fire();
     }
 
 }

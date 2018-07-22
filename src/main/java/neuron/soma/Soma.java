@@ -1,7 +1,7 @@
 package neuron.soma;
 
 import javafx.util.Pair;
-import main.java.neuron.Neuron;
+import neuron.Neuron;
 import neuron.branch.Dendrite;
 
 import java.util.List;
@@ -22,13 +22,18 @@ public abstract class Soma {
         this.dendrites = connectedDendrites;
     }
 
+    public void propagateDendriteSignalsOneTimeIncrementAndFireAxonIfRequired() {
+        dendrites.forEach(dendrite -> dendrite.propagateSignalsOneTimeIncrement());
+        fireAxonIfRequired();
+    }
+
     public void fireAxonIfRequired() {
-        if (doesAxonFireAtNextTimeIncrement()) {
+        if (doesAxonFireAtCurrentTimeIncrement()) {
             this.parentNeuron.fireAxon();
         }
     }
 
-    public abstract boolean doesAxonFireAtNextTimeIncrement();
+    public abstract boolean doesAxonFireAtCurrentTimeIncrement();
 
     public double sumSignalsFromEndsOfDendritesForThisTimeIncrement() {
         return this.getDendrites().stream()
