@@ -24,6 +24,14 @@ public abstract class Branch<T extends Signal> {
         this.signalType = signalType;
     }
 
+    public void fire() {
+        this.addSignal();
+    }
+
+    public void addSignal() {
+        signals.add( (T) SignalFactory.getSignal(signalType));
+    }
+
     public void propagateSignalsOneTimeIncrement() {
         for (Signal signal : signals) {
             if (signal.hasFullyPassedPosition(length)) {
@@ -31,10 +39,6 @@ public abstract class Branch<T extends Signal> {
             }
             signal.propagateOneTimeIncrement();
         }
-    }
-
-    public void addSignal() {
-        signals.add( (T) SignalFactory.getSignal(signalType));
     }
 
     public double getSignalMagnitudeAtEndOfBranch() {

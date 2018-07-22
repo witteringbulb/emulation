@@ -16,8 +16,4 @@ public class Axon extends Branch {
 
     private List<AxonTerminal> axonTerminals;
 
-    public void fire() {
-        this.addSignal();
-    }
-
 }
