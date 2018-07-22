@@ -1,7 +1,7 @@
 package main.java.neuron;
 
-import main.java.neuron.branch.Axon;
-import main.java.neuron.soma.Soma;
+import neuron.branch.Axon;
+import neuron.soma.Soma;
 
 public class Neuron {
 

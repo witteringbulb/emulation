@@ -8,7 +8,8 @@ public class Axon extends Branch {
 
     public Axon(double orientationInRadians,
                 double length,
-                SignalType signalType) {
+                SignalType signalType,
+                List<AxonTerminal> axonTerminals) {
         super(orientationInRadians, length, signalType);
         this.axonTerminals = axonTerminals;
     }
