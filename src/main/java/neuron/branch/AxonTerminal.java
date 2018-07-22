@@ -5,10 +5,11 @@ import neuron.signal.SignalType;
 
 public class AxonTerminal extends Branch {
 
-    public AxonTerminal(double orientationInRadians,
+    public AxonTerminal(double[] coordinatesOfBranchBeginning,
+                        double orientationInRadians,
                         double length,
                         SignalType signalType) {
-        super(orientationInRadians, length, signalType);
+        super(coordinatesOfBranchBeginning, orientationInRadians, length, signalType);
     }
 
     public void fire() {

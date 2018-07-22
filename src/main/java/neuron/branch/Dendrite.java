@@ -4,10 +4,11 @@ import neuron.signal.SignalType;
 
 public class Dendrite extends Branch {
 
-    public Dendrite(double orientationInRadians,
-                     double length,
-                     SignalType signalType) {
-        super(orientationInRadians, length, signalType);
+    public Dendrite(double[] coordinatesOfBranchBeginning,
+                    double orientationInRadians,
+                    double length,
+                    SignalType signalType) {
+        super(coordinatesOfBranchBeginning, orientationInRadians, length, signalType);
     }
 
     public void fire(double amplitude) {

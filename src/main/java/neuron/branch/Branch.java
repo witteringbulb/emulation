@@ -10,6 +10,7 @@ import neuron.signal.SignalType;
 
 public abstract class Branch<T extends Signal> {
 
+    private double[] coordinatesOfBranchBeginning;
     private double orientationInRadians;
     private double length;
 
@@ -17,9 +18,11 @@ public abstract class Branch<T extends Signal> {
 
     private List<T> signals = new ArrayList<T>();
 
-    public Branch(double orientationInRadians,
+    public Branch(double[] coordinatesOfBranchBeginning,
+                  double orientationInRadians,
                   double length,
                   SignalType signalType) {
+        this.coordinatesOfBranchBeginning = coordinatesOfBranchBeginning;
         this.orientationInRadians = orientationInRadians;
         this.length = length;
         this.signalType = signalType;
@@ -42,6 +45,10 @@ public abstract class Branch<T extends Signal> {
 
     public double getSignalMagnitudeAtEndOfBranch() {
         return signals.stream().mapToDouble(signal -> signal.getSignalStrengthAtLocation(length)).sum();
+    }
+
+    public double[] getCoordinatesOfBranchBeginning() {
+        return this.coordinatesOfBranchBeginning;
     }
 
     public double getOrientationInRadians() {
