@@ -5,8 +5,7 @@ import neuron.signal.SignalType;
 
 public class AxonTerminalBuilder {
     private double[] coordinatesOfBranchBeginning;
-    private double orientationInRadians;
-    private double length;
+    private double[] coordinatesOfBranchEnd;
     private SignalType signalType;
 
     public AxonTerminalBuilder setCoordinatesOfBranchBeginning(double[] coordinatesOfBranchBeginning) {
@@ -14,13 +13,8 @@ public class AxonTerminalBuilder {
         return this;
     }
 
-    public AxonTerminalBuilder setOrientationInRadians(double orientationInRadians) {
-        this.orientationInRadians = orientationInRadians;
-        return this;
-    }
-
-    public AxonTerminalBuilder setLength(double length) {
-        this.length = length;
+    public AxonTerminalBuilder setCoordinatesOfBranchEnd(double[] coordinatesOfBranchEnd) {
+        this.coordinatesOfBranchEnd = coordinatesOfBranchEnd;
         return this;
     }
 
@@ -30,6 +24,6 @@ public class AxonTerminalBuilder {
     }
 
     public AxonTerminal createAxonTerminal() {
-        return new AxonTerminal(coordinatesOfBranchBeginning, orientationInRadians, length, signalType);
+        return new AxonTerminal(coordinatesOfBranchBeginning, coordinatesOfBranchEnd, signalType);
     }
 }

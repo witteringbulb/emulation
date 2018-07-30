@@ -26,22 +26,26 @@ public class BranchFactory<T extends Branch> {
     }
 
     public List<Branch> getBranchesFromArrayssOfEndpointCoordinates(double[] xCoordinatesOfEndpoints, double[] yCoordinatesOfEndpoints) {
+        if (xCoordinatesOfEndpoints.length != yCoordinatesOfEndpoints.length) {
+            throw new IllegalArgumentException("arrays must be of equal length");
+        }
         List<Branch> branches = new ArrayList<Branch>();
-        //TODO: Add branches as needed
+        for (int index = 0; index < xCoordinatesOfEndpoints.length; index++) {
+            branches.add(getBranch(xCoordinatesOfEndpoints[index], yCoordinatesOfEndpoints[index]));
+        }
+        return branches;
     }
 
-    public Branch getBranch(double orientationInRadians, double length) {
+    public Branch getBranch(double xCoordinateOfBranchEnd, double yCoordinateOfBranchEnd) {
         if (branchType == Dendrite.class) {
-            return new DendriteBuilder().setOrientationInRadians(orientationInRadians)
-                                        .setLength(length)
-                                        .setSignalType(signalType)
+            return new DendriteBuilder().setSignalType(signalType)
                                         .setCoordinatesOfBranchBeginning(coordinatesOfBranchBeginning)
+                                        .setCoordinatesOfBranchEnd(new double[]{xCoordinateOfBranchEnd, yCoordinateOfBranchEnd})
                                         .createDendrite();
         } else if (branchType == AxonTerminal.class) {
-            return new AxonTerminalBuilder().setOrientationInRadians(orientationInRadians)
-                                            .setLength(length)
-                                            .setSignalType(signalType)
+            return new AxonTerminalBuilder().setSignalType(signalType)
                                             .setCoordinatesOfBranchBeginning(coordinatesOfBranchBeginning)
+                                            .setCoordinatesOfBranchEnd(new double[]{xCoordinateOfBranchEnd, yCoordinateOfBranchEnd})
                                             .createAxonTerminal();
         } else {
             throw new IllegalArgumentException("branch Type not recognised");

@@ -11,19 +11,17 @@ public class Axon extends Branch {
     private List<AxonTerminal> axonTerminals;
 
     public Axon(double[] coordinatesOfBranchBeginning,
-                double orientationInRadians,
-                double length,
+                double[] coordinatesOfBranchEnd,
                 SignalType signalType,
                 List<AxonTerminal> axonTerminals) {
-        super(coordinatesOfBranchBeginning, orientationInRadians, length, signalType);
+        super(coordinatesOfBranchBeginning, coordinatesOfBranchEnd, signalType);
         this.axonTerminals = axonTerminals;
     }
 
     public Axon(double[] coordinatesOfBranchBeginning,
-                double orientationInRadians,
-                double length,
+                double[] coordinatesOfBranchEnd,
                 SignalType signalType) {
-        super(coordinatesOfBranchBeginning, orientationInRadians, length, signalType);
+        super(coordinatesOfBranchBeginning, coordinatesOfBranchEnd, signalType);
     }
 
     public void fire() {

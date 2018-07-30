@@ -5,8 +5,7 @@ import neuron.signal.SignalType;
 
 public class DendriteBuilder {
     private double[] coordinatesOfBranchBeginning;
-    private double orientationInRadians;
-    private double length;
+    private double[] coordinatesOfBranchEnd;
     private SignalType signalType;
 
     public DendriteBuilder setCoordinatesOfBranchBeginning(double[] coordinatesOfBranchBeginning) {
@@ -14,13 +13,8 @@ public class DendriteBuilder {
         return this;
     }
 
-    public DendriteBuilder setOrientationInRadians(double orientationInRadians) {
-        this.orientationInRadians = orientationInRadians;
-        return this;
-    }
-
-    public DendriteBuilder setLength(double length) {
-        this.length = length;
+    public DendriteBuilder setCoordinatesOfBranchEnd(double[] coordinatesOfBranchEnd) {
+        this.coordinatesOfBranchEnd = coordinatesOfBranchEnd;
         return this;
     }
 
@@ -30,6 +24,6 @@ public class DendriteBuilder {
     }
 
     public Dendrite createDendrite() {
-        return new Dendrite(coordinatesOfBranchBeginning, orientationInRadians, length, signalType);
+        return new Dendrite(coordinatesOfBranchBeginning, coordinatesOfBranchEnd, signalType);
     }
 }

@@ -11,20 +11,21 @@ import neuron.signal.SignalType;
 public abstract class Branch<T extends Signal> {
 
     private double[] coordinatesOfBranchBeginning;
-    private double orientationInRadians;
-    private double length;
-
+    private double[] coordinatesOfBranchEnd;
     private SignalType signalType;
+
+    private double length;
 
     private List<T> signals = new ArrayList<T>();
 
     public Branch(double[] coordinatesOfBranchBeginning,
-                  double orientationInRadians,
-                  double length,
+                  double[] coordinatesOfBranchEnd,
                   SignalType signalType) {
+        if (coordinatesOfBranchBeginning.length !=2 || coordinatesOfBranchEnd.length != 2) {
+            throw new IllegalArgumentException("Coordinates arrays must both be of length 2");
+        }
         this.coordinatesOfBranchBeginning = coordinatesOfBranchBeginning;
-        this.orientationInRadians = orientationInRadians;
-        this.length = length;
+        this.coordinatesOfBranchEnd = coordinatesOfBranchEnd;
         this.signalType = signalType;
     }
 
@@ -37,30 +38,30 @@ public abstract class Branch<T extends Signal> {
         while (signalsIterator.hasNext()) {
             Signal signal = signalsIterator.next();
             signal.propagateOneTimeIncrement();
-            if (signal.hasFullyPassedPosition(length)) {
+            if (signal.hasFullyPassedPosition(this.getLength())) {
                 signalsIterator.remove();
             }
         }
     }
 
     public double getSignalMagnitudeAtEndOfBranch() {
-        return signals.stream().mapToDouble(signal -> signal.getSignalStrengthAtLocation(length)).sum();
+        return signals.stream().mapToDouble(signal -> signal.getSignalStrengthAtLocation(this.getLength())).sum();
     }
 
     public double[] getCoordinatesOfBranchBeginning() {
         return this.coordinatesOfBranchBeginning;
     }
-
-    public double getOrientationInRadians() {
-        return this.orientationInRadians;
+    public double[] getCoordinatesOfEnd() {
+        return this.coordinatesOfBranchEnd;
     }
-
-    public void setOrientationInRadians(double orientationInRadians) { this.orientationInRadians = orientationInRadians; }
 
     public double getLength() {
-        return length;
+        if (this.length == 0.0d) {
+            this.length = Math.sqrt(
+                    Math.pow(this.coordinatesOfBranchEnd[0] - this.coordinatesOfBranchBeginning[0], 2.0)
+                            + Math.pow(this.coordinatesOfBranchEnd[1] - this.coordinatesOfBranchBeginning[1], 2.0));
+        }
+        return this.length;
     }
-
-    public void setLength(double length) { this.length = length; }
 
 }
