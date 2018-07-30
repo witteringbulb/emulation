@@ -7,16 +7,30 @@ import neuron.builders.AxonTerminalBuilder;
 import neuron.builders.DendriteBuilder;
 import neuron.signal.SignalType;
 
-public class BranchFactory {
+import java.util.ArrayList;
+import java.util.List;
 
-    public static Branch getBranch(Class branchType,
-                                   double[] coordinatesOfBranchBeginning,
-                                   double orientationInRadians,
-                                   double length,
-                                   SignalType signalType) {
+public class BranchFactory<T extends Branch> {
+
+    private final Class<T> branchType;
+    private final double[] coordinatesOfBranchBeginning;
+    private final SignalType signalType;
+
+    public BranchFactory(Class<T> type, double[] coordinatesOfBranchBeginning, SignalType signalType) {
         if (coordinatesOfBranchBeginning.length != 2) {
             throw new IllegalArgumentException("Coordinates should be of length 2");
         }
+        this.coordinatesOfBranchBeginning = coordinatesOfBranchBeginning;
+        this.branchType = type;
+        this.signalType = signalType;
+    }
+
+    public List<Branch> getBranchesFromArrayssOfEndpointCoordinates(double[] xCoordinatesOfEndpoints, double[] yCoordinatesOfEndpoints) {
+        List<Branch> branches = new ArrayList<Branch>();
+        //TODO: Add branches as needed
+    }
+
+    public Branch getBranch(double orientationInRadians, double length) {
         if (branchType == Dendrite.class) {
             return new DendriteBuilder().setOrientationInRadians(orientationInRadians)
                                         .setLength(length)
