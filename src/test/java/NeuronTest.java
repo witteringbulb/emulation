@@ -1,8 +1,9 @@
-import javafx.util.Pair;
 import neuron.Neuron;
 import neuron.branch.Axon;
 import neuron.branch.AxonTerminal;
+import neuron.builders.AxonTerminalBuilder;
 import neuron.branch.Dendrite;
+import neuron.builders.DendriteBuilder;
 import neuron.signal.SignalType;
 import neuron.soma.HeavisideSoma;
 import neuron.soma.Soma;
@@ -20,19 +21,19 @@ class NeuronTest {
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
 
-        Dendrite dendrite1 = new Dendrite(0.5, 1.5, SignalType.SQUARE_SIGNAL_DEFAULT);
-        Dendrite dendrite2 = new Dendrite(1.3, 1.0, SignalType.SQUARE_SIGNAL_DEFAULT);
+        Dendrite dendrite1 = new DendriteBuilder().setCoordinatesOfBranchBeginning(new double[]{1.0, 0.5}).setCoordinatesOfBranchEnd(new double[]{0.5, 1.0}).setSignalType(SignalType.SQUARE_SIGNAL_DEFAULT).createDendrite();
+        Dendrite dendrite2 = new DendriteBuilder().setCoordinatesOfBranchBeginning(new double[]{1.0, 0.5}).setCoordinatesOfBranchEnd(new double[]{0.1, 0.3}).setSignalType(SignalType.SQUARE_SIGNAL_DEFAULT).createDendrite();
         List<Dendrite> dendrites = new ArrayList<>();
         dendrites.add(dendrite1);
         dendrites.add(dendrite2);
         Soma soma = new HeavisideSoma(new double[]{1.0, 0.5}, dendrites, 0.5);
 
-        AxonTerminal axonTerminal1 = new AxonTerminal(0.2, 1.1, SignalType.SQUARE_SIGNAL_DEFAULT);
-        AxonTerminal axonTerminal2 = new AxonTerminal(0.6, 2.1, SignalType.SQUARE_SIGNAL_DEFAULT);
+        AxonTerminal axonTerminal1 = new AxonTerminalBuilder().setCoordinatesOfBranchBeginning(new double[]{2.0, 1.5}).setCoordinatesOfBranchEnd(new double[]{2.5, 1.7}).setSignalType(SignalType.SQUARE_SIGNAL_DEFAULT).createAxonTerminal();
+        AxonTerminal axonTerminal2 = new AxonTerminalBuilder().setCoordinatesOfBranchBeginning(new double[]{2.0, 1.5}).setCoordinatesOfBranchEnd(new double[]{2.0, 2.1}).setSignalType(SignalType.SQUARE_SIGNAL_DEFAULT).createAxonTerminal();
         List<AxonTerminal> axonTerminals = new ArrayList<>();
         axonTerminals.add(axonTerminal1);
         axonTerminals.add(axonTerminal2);
-        Axon axon = new Axon(0.9, 5.3, SignalType.SQUARE_SIGNAL_DEFAULT, axonTerminals);
+        Axon axon = new Axon(soma.getSomaLocation(), new double[]{2.0, 1.5}, SignalType.SQUARE_SIGNAL_DEFAULT, axonTerminals);
 
         neuron = new Neuron(soma, axon);
 

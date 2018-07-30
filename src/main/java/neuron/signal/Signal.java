@@ -5,22 +5,24 @@ import neuron.branch.Branch;
 
 public abstract class Signal {
 
-    private Branch parentBranch;
+    private final Branch parentBranch;
 
     private double[] meanLocation;
+    private final double[] signalXYDirectionUnitVector;
 
     private double distanceFromSignalMeanToSignalOrigin = 0.0;
 
     private double amplitude;
     private double width;
-    private double displacement;
 
-    public Signal(double width, double displacement, double amplitude, Branch parentBranch) {
+    public Signal(double width, double amplitude, Branch parentBranch) {
         this.width = width;
-        this.displacement = displacement;
         this.amplitude = amplitude;
         this.parentBranch = parentBranch;
         this.meanLocation = parentBranch.getCoordinatesOfBranchBeginning();
+
+        this.signalXYDirectionUnitVector = new double[]{Math.sin(parentBranch.getOrientationInRadians()),
+                Math.cos(parentBranch.getOrientationInRadians())};
     }
 
     public void propagateOneTimeIncrement() {
@@ -28,9 +30,9 @@ public abstract class Signal {
     }
 
     private void updateDistanceFromSignalMeanToSignalOrigin() {
-        this.distanceFromSignalMeanToSignalOrigin += DefaultValues.DEFAULT_SIGNAL_VELOCITY;
-        this.meanLocation[0] += DefaultValues.DEFAULT_SIGNAL_VELOCITY * Math.cos(parentBranch.getOrientationInRadians());
-        this.meanLocation[1] += DefaultValues.DEFAULT_SIGNAL_VELOCITY * Math.sin(parentBranch.getOrientationInRadians());
+        this.distanceFromSignalMeanToSignalOrigin += DefaultValues.DEFAULT_SIGNAL_SPEED;
+        this.meanLocation[0] += DefaultValues.DEFAULT_SIGNAL_SPEED * this.signalXYDirectionUnitVector[0];
+        this.meanLocation[1] += DefaultValues.DEFAULT_SIGNAL_SPEED * this.signalXYDirectionUnitVector[1];
     }
 
     public double getSignalStrengthAtLocation(double position) {
@@ -54,7 +56,7 @@ public abstract class Signal {
 
     public double getWidth() { return width; }
 
-    public double getDisplacement() { return displacement; }
+    public double[] getDirection() { return this.signalXYDirectionUnitVector; }
 
 
 

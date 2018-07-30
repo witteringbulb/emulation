@@ -8,15 +8,16 @@ import neuron.factories.SignalFactory;
 import neuron.signal.Signal;
 import neuron.signal.SignalType;
 
-public abstract class Branch<T extends Signal> {
+public abstract class Branch {
 
     private double[] coordinatesOfBranchBeginning;
     private double[] coordinatesOfBranchEnd;
     private SignalType signalType;
 
     private double length;
+    private double orientationInRadians;
 
-    private List<T> signals = new ArrayList<T>();
+    private List<Signal> signals = new ArrayList<Signal>();
 
     public Branch(double[] coordinatesOfBranchBeginning,
                   double[] coordinatesOfBranchEnd,
@@ -30,11 +31,11 @@ public abstract class Branch<T extends Signal> {
     }
 
     public void addSignal(double amplitude) {
-        signals.add( (T) SignalFactory.getSignal(signalType, amplitude));
+        signals.add( SignalFactory.getSignal(signalType, amplitude));
     }
 
     public void propagateSignalsOneTimeIncrement() {
-        Iterator<T> signalsIterator = signals.iterator();
+        Iterator<Signal> signalsIterator = signals.iterator();
         while (signalsIterator.hasNext()) {
             Signal signal = signalsIterator.next();
             signal.propagateOneTimeIncrement();
@@ -63,5 +64,20 @@ public abstract class Branch<T extends Signal> {
         }
         return this.length;
     }
+
+    public double getOrientationInRadians() {
+        //TODO: TEST THIS
+        if (this.orientationInRadians == 0.0d) {
+            this.orientationInRadians = Math.PI/2 + Math.atan(
+                    this.coordinatesOfBranchEnd[0]-this.coordinatesOfBranchBeginning[0]
+                            /(this.coordinatesOfBranchEnd[1]-this.coordinatesOfBranchBeginning[1]));
+            if (this.coordinatesOfBranchBeginning[0] > this.coordinatesOfBranchEnd[0]) {
+                this.orientationInRadians += Math.PI;
+            }
+        }
+        return this.orientationInRadians;
+    }
+
+    public List<Signal> getSignals() {return signals;}
 
 }
