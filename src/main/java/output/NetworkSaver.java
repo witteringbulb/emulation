@@ -44,10 +44,6 @@ public class NetworkSaver {
             ex.printStackTrace();
         }
 
-        //TODO: Save info about structure of neurons to a csv file (this format allows us to use Processing's Table library)
-        //Basically we just want to save a set of line segments which can then be drawn in Processing
-        //Each row should look like: xBeginning, yBeginning, xEnd, yEnd
-
     }
 
 }
