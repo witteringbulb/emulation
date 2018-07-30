@@ -10,9 +10,11 @@ import neuron.signal.SignalType;
 
 public abstract class Branch {
 
-    private double[] coordinatesOfBranchBeginning;
+    private final double[] coordinatesOfBranchBeginning;
     private double[] coordinatesOfBranchEnd;
-    private SignalType signalType;
+    private final SignalType signalType;
+
+    private final SignalFactory signalFactory;
 
     private double length;
     private double orientationInRadians;
@@ -28,10 +30,11 @@ public abstract class Branch {
         this.coordinatesOfBranchBeginning = coordinatesOfBranchBeginning;
         this.coordinatesOfBranchEnd = coordinatesOfBranchEnd;
         this.signalType = signalType;
+        this.signalFactory = new SignalFactory(this.signalType);
     }
 
     public void addSignal(double amplitude) {
-        signals.add( SignalFactory.getSignal(signalType, amplitude));
+        signals.add( signalFactory.getSignal(amplitude, this));
     }
 
     public void propagateSignalsOneTimeIncrement() {

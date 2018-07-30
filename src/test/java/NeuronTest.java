@@ -41,8 +41,8 @@ class NeuronTest {
 
     @Test
     public void checkNeuronValuesAreSetCorrectly() {
-        assertEquals(0.5, neuron.getSoma().getDendrites().get(0).getOrientationInRadians());
-        assertEquals(1.0, neuron.getSoma().getDendrites().get(1).getLength());
+        assertEquals(1.0, neuron.getSoma().getDendrites().get(0).getCoordinatesOfBranchEnd()[1]);
+        assertEquals(0.1, neuron.getSoma().getDendrites().get(1).getCoordinatesOfBranchEnd()[0]);
 
         assertEquals(neuron.getSoma().getSomaLocation()[0], 1.0);
     }
