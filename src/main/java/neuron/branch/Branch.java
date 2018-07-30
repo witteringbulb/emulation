@@ -52,7 +52,7 @@ public abstract class Branch {
     public double[] getCoordinatesOfBranchBeginning() {
         return this.coordinatesOfBranchBeginning;
     }
-    public double[] getCoordinatesOfEnd() {
+    public double[] getCoordinatesOfBranchEnd() {
         return this.coordinatesOfBranchEnd;
     }
 
@@ -79,5 +79,12 @@ public abstract class Branch {
     }
 
     public List<Signal> getSignals() {return signals;}
+
+    public double[] getBranchLocationInfo() {
+        return new double[]{this.getCoordinatesOfBranchBeginning()[0],
+                this.getCoordinatesOfBranchBeginning()[1],
+                this.getCoordinatesOfBranchEnd()[0],
+                this.getCoordinatesOfBranchEnd()[1]};
+    }
 
 }
