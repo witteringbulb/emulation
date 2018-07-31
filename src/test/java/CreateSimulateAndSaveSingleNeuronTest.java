@@ -10,6 +10,8 @@ import neuron.soma.HeavisideSoma;
 import neuron.soma.Soma;
 import org.junit.jupiter.api.Test;
 import output.NetworkSaver;
+import output.SignalSaver;
+import simulation.PopulationSimulator;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -21,6 +23,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class CreateSimulateAndSaveSingleNeuronTest {
 
     private Neuron neuron;
+    private List<Neuron> neuronPop;
+    private SignalSaver signalSaver;
+    private NetworkSaver networkSaver;
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
@@ -42,9 +47,17 @@ class CreateSimulateAndSaveSingleNeuronTest {
                 new BranchGenerator(neuron.getAxon().getCoordinatesOfBranchEnd(), Dendrite.class, signalType)
                     .createEvenlySpacedBranchesOfEqualLength(1.0, 2));
 
-        List<Neuron> neuronPop = new ArrayList<Neuron>();
+        neuronPop = new ArrayList<Neuron>();
         neuronPop.add(neuron);
-        NetworkSaver networkSaver = new NetworkSaver(neuronPop, saveDirectory);
+        networkSaver = new NetworkSaver(neuronPop, saveDirectory);
+        signalSaver = new SignalSaver(neuronPop, saveDirectory);
+    }
 
+    @Test
+    public void testSimulateAndSaveSingleNeuron() {
+
+        //TODO: Save network
+
+        PopulationSimulator simulator = new PopulationSimulator(neuronPop, signalSaver);
     }
 }
