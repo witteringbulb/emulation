@@ -17,13 +17,12 @@ public abstract class Soma {
 
     private List<Dendrite> dendrites;
 
-    public Soma(double[] somaLocation, List<Dendrite> connectedDendrites) {
+    public Soma(double[] somaLocation) {
         if (somaLocation.length != 2) {
             throw new IllegalArgumentException(
                     "somaLocation coordinates must be supplied as an array of length 2");
         }
         this.somaLocation = somaLocation;
-        this.dendrites = connectedDendrites;
     }
 
     public void propagateDendriteSignalsOneTimeIncrementAndFireAxonIfRequired() {
@@ -48,6 +47,8 @@ public abstract class Soma {
     public List<Dendrite> getDendrites() {
         return dendrites;
     }
+
+    public void setDendrites(List<Dendrite> dendrites) { this.dendrites = dendrites; }
 
     public double[] getSomaLocation() {
         return somaLocation;

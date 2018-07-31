@@ -47,4 +47,6 @@ public class Axon extends Branch {
         return this.axonTerminals;
     }
 
+    public void setAxonTerminals(List<AxonTerminal> axonTerminals) { this.axonTerminals = axonTerminals; }
+
 }

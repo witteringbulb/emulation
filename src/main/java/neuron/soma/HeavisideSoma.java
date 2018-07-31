@@ -10,9 +10,8 @@ public class HeavisideSoma extends Soma {
     private double activationThreshold;
 
     public HeavisideSoma(double[] somaLocation,
-                         List<Dendrite> connectedDendrites,
                          double activationThreshold) {
-        super(somaLocation, connectedDendrites);
+        super(somaLocation);
         this.activationThreshold = activationThreshold;
     }
 

@@ -25,13 +25,13 @@ public class BranchFactory<T extends Branch> {
         this.signalType = signalType;
     }
 
-    public List<Branch> getBranchesFromArrayssOfEndpointCoordinates(double[] xCoordinatesOfEndpoints, double[] yCoordinatesOfEndpoints) {
-        if (xCoordinatesOfEndpoints.length != yCoordinatesOfEndpoints.length) {
+    public List<Branch> getBranchesFromArrayssOfEndpointCoordinates(List<Double>  xCoordinatesOfEndpoints, List<Double>  yCoordinatesOfEndpoints) {
+        if (xCoordinatesOfEndpoints.size() != yCoordinatesOfEndpoints.size()) {
             throw new IllegalArgumentException("arrays must be of equal length");
         }
         List<Branch> branches = new ArrayList<Branch>();
-        for (int index = 0; index < xCoordinatesOfEndpoints.length; index++) {
-            branches.add(getBranch(xCoordinatesOfEndpoints[index], yCoordinatesOfEndpoints[index]));
+        for (int index = 0; index < xCoordinatesOfEndpoints.size(); index++) {
+            branches.add(getBranch(xCoordinatesOfEndpoints.get(index), yCoordinatesOfEndpoints.get(index)));
         }
         return branches;
     }
