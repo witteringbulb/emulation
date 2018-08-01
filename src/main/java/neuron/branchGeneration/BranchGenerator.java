@@ -23,17 +23,19 @@ public class BranchGenerator<T extends Branch> {
     }
 
     public List<Branch> createEvenlySpacedBranchesOfEqualLength(double radius, int numberOfBranches) {
-        List<List<Double>> branchEndpointCoordinates = this.generateEvenlySpacedpoints(radius, numberOfBranches);
+        List<List<Double>> branchEndpointCoordinates = this.generateEvenlySpacedPointsWithRandomOffset(radius, numberOfBranches);
         return this.createBranchesFromListsOfEndpointCoordinates(branchEndpointCoordinates.get(0), branchEndpointCoordinates.get(1));
     }
 
-    public List<List<Double>> generateEvenlySpacedpoints(double radius, int numberOfPoints) {
+    public List<List<Double>> generateEvenlySpacedPointsWithRandomOffset(double radius, int numberOfPoints) {
         List<Double> xValues = new ArrayList<>();
         List<Double> yValues = new ArrayList<>();
 
+        double offset = Math.random()*2*Math.PI;
+
         for (int i = 0; i < numberOfPoints; i++) {
-            xValues.add(radius * Math.sin(numberOfPoints/(2*Math.PI)));
-            yValues.add(radius * Math.cos(numberOfPoints/(2*Math.PI)));
+            xValues.add(coordinatesOfStartOfBranch[0] + radius * Math.sin(offset + i * (2*Math.PI)/numberOfPoints));
+            yValues.add(coordinatesOfStartOfBranch[1] + radius * Math.cos(offset + i * (2*Math.PI)/numberOfPoints));
         }
 
         List<List<Double>> coordinates = new ArrayList<>();

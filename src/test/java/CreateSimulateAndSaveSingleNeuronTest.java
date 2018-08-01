@@ -44,11 +44,11 @@ class CreateSimulateAndSaveSingleNeuronTest {
 
         neuron.getSoma().setDendrites(
                 new BranchGenerator(neuron.getSoma().getSomaLocation(), Dendrite.class, signalType)
-                        .createEvenlySpacedBranchesOfEqualLength(2.0, 3));
+                        .createEvenlySpacedBranchesOfEqualLength(2.0, 5));
 
         neuron.getAxon().setAxonTerminals(
                 new BranchGenerator(neuron.getAxon().getCoordinatesOfBranchEnd(), AxonTerminal.class, signalType)
-                        .createEvenlySpacedBranchesOfEqualLength(2.0, 2));
+                        .createEvenlySpacedBranchesOfEqualLength(1.0, 4));
 
         neuronPop = new ArrayList<Neuron>();
         neuronPop.add(neuron);
