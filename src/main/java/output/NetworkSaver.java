@@ -37,6 +37,8 @@ public class NetworkSaver {
 
             PrintWriter pw = new PrintWriter(file);
 
+            pw.write("x1,y1,x2,y2\n");
+
             allBranchBeginningCoordinates.forEach(branchCoordinates -> pw.write(
                             branchCoordinates[0]+","
                             + branchCoordinates[1]+","

@@ -30,6 +30,8 @@ public class SignalSaver {
 
             PrintWriter pw = new PrintWriter(new File(this.pathToSaveDirectory + fileName));
 
+            pw.write("mean_loc_x,mean_loc_y,direction_x,direction_y,amplitude,width\n");
+
             List<Signal> allSignalsInPopulation = neurons.stream()
                     .map(neuron -> neuron.getAllBranchesInSingleList())
                     .flatMap(branches -> branches.stream())

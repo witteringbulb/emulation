@@ -32,7 +32,8 @@ class CreateSimulateAndSaveSingleNeuronTest {
 
         String saveDirectory =
                 "src" + File.separator + "test" + File.separator +
-                        "output_data" + File.separator + "CreateSimulateAndSaveSingleNeuronTest" + File.separator;
+                        "output_and_sketches" + File.separator + "CreateSimulateAndSaveSingleNeuronTest" + File.separator +
+                "single_neuron_sketch" + File.separator + "data" + File.separator;
 
         SignalType signalType = SignalType.SQUARE_SIGNAL_DEFAULT;
 
