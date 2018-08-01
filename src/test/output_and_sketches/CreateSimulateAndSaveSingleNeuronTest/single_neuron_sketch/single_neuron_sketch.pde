@@ -1,7 +1,12 @@
+import gifAnimation.*;
+
 final String dataDirectory = dataPath("");
 
 final int WIDTH_IN_PIXELS = 1000;
 final int HEIGHT_IN_PIXELS = 1000;
+
+final int BRANCH_STROKE_WEIGHT = 50;
+final float SIGNAL_STROKE_WEIGHT_SCALING_COEFF = 1;
 
 int numberOfFramesInGif = 100;
 int startFrame = 1;
@@ -44,13 +49,17 @@ public void resetImageAndRemoveDrawnSignals() {
 }
 
 public void drawBranches() {
+  stroke(BRANCH_STROKE_WEIGHT);
   Table branches = loadTable("branches.csv");
   for (TableRow row : branches.rows()) {
     float x1 = row.getFloat("x1");
     float y1 = row.getFloat("y1");
     float x2 = row.getFloat("x2");
     float y2 = row.getFloat("y2");
-    line(x1, y1, x2, y2);
+    line(x1 * conversionCoefficientNeuronCoordinatesPerPixelXAxis, 
+    y1 * conversionCoefficientNeuronCoordinatesPerPixelYAxis, 
+    x2 * conversionCoefficientNeuronCoordinatesPerPixelXAxis, 
+    y2 * conversionCoefficientNeuronCoordinatesPerPixelYAxis);
   } 
 }
 
@@ -77,10 +86,28 @@ public void setConversionCoefficientsUsingBranchInformation() {
 public void drawSignals() {
   Table signalsForThisFrame = loadTable(frame+"_allSignals.csv", "header");
   for (TableRow signal : signalsForThisFrame.rows()) {
-    drawSignal(signal);
+    if (signal.getString("type") == "SquareSignal") {drawSquareSignal(signal);}
+    else { throw new IllegalArgumentException("Signal type not recognised");}
   }
 }
 
-public void drawSignal(TableRow signal) {
-  //TODO: Need a way to draw differently for different kinds of signals. Probably will have to include this info in csv. 
+public void drawSquareSignal(TableRow signal) {
+  float mean_loc_x = signal.getFloat("mean_loc_x");
+  float mean_loc_y = signal.getFloat("mean_loc_y");
+  float direction_x = signal.getFloat("direction_x");
+  float direction_y = signal.getFloat("direction_y");
+  float amplitude = signal.getFloat("amplitude");
+  float signal_width = signal.getFloat("width");
+  
+  float x1 = mean_loc_x - signal_width * cos(atan(direction_x/direction_y));
+  float x2 = mean_loc_x + signal_width * cos(atan(direction_x/direction_y));
+  
+  float y1 = mean_loc_y - signal_width * sin(atan(direction_x/direction_y));
+  float y2 = mean_loc_y + signal_width * sin(atan(direction_x/direction_y));
+  
+  stroke(round(amplitude*SIGNAL_STROKE_WEIGHT_SCALING_COEFF));
+  line(x1 * conversionCoefficientNeuronCoordinatesPerPixelXAxis, 
+    y1 * conversionCoefficientNeuronCoordinatesPerPixelYAxis, 
+    x2 * conversionCoefficientNeuronCoordinatesPerPixelXAxis, 
+    y2 * conversionCoefficientNeuronCoordinatesPerPixelYAxis);
 }
