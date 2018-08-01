@@ -30,7 +30,7 @@ public class SignalSaver {
 
             PrintWriter pw = new PrintWriter(new File(this.pathToSaveDirectory + fileName));
 
-            pw.write("mean_loc_x,mean_loc_y,direction_x,direction_y,amplitude,width\n");
+            pw.write("mean_loc_x,mean_loc_y,direction_x,direction_y,amplitude,width,type\n");
 
             List<Signal> allSignalsInPopulation = neurons.stream()
                     .map(neuron -> neuron.getAllBranchesInSingleList())
@@ -44,7 +44,8 @@ public class SignalSaver {
                         +signal.getDirection()[0]+","
                         +signal.getDirection()[1]+","
                         +signal.getAmplitude()+","
-                        +signal.getWidth()+"\n");
+                        +signal.getWidth()+","
+                        +signal.getTypeAsString()+"\n");
             }
             this.timeStep++;
             pw.close();

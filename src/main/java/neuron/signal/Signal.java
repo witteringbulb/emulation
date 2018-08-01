@@ -58,6 +58,6 @@ public abstract class Signal {
 
     public double[] getDirection() { return this.signalXYDirectionUnitVector; }
 
-
+    public abstract String getTypeAsString();
 
 }

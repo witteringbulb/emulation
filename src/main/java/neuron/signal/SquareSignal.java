@@ -13,4 +13,8 @@ public class SquareSignal extends Signal {
         return 0 <  adjustedPosition && adjustedPosition < this.getWidth() ? 1 : 0;
     }
 
+    public String getTypeAsString() {
+        return "SquareSignal";
+    }
+
 }
