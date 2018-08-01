@@ -29,7 +29,13 @@ public class NetworkSaver {
 
         try {
 
-            PrintWriter pw = new PrintWriter(new File(this.pathToSaveDirectory + fileName));
+            File file = new File(this.pathToSaveDirectory + fileName);
+            if (file.getParentFile() != null) {
+                file.getParentFile().mkdirs();
+            }
+            file.createNewFile();
+
+            PrintWriter pw = new PrintWriter(file);
 
             allBranchBeginningCoordinates.forEach(branchCoordinates -> pw.write(
                             branchCoordinates[0]+","

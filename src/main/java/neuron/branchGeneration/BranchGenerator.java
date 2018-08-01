@@ -33,7 +33,7 @@ public class BranchGenerator<T extends Branch> {
 
         for (int i = 0; i < numberOfPoints; i++) {
             xValues.add(radius * Math.sin(numberOfPoints/(2*Math.PI)));
-            xValues.add(radius * Math.cos(numberOfPoints/(2*Math.PI)));
+            yValues.add(radius * Math.cos(numberOfPoints/(2*Math.PI)));
         }
 
         List<List<Double>> coordinates = new ArrayList<>();

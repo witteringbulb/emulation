@@ -31,8 +31,8 @@ class CreateSimulateAndSaveSingleNeuronTest {
     void setUp() {
 
         String saveDirectory =
-                "src" + File.separator + "test" + File.separator + "CreateSimulateAndSaveSingleNeuronTest"
-                + File.separator;
+                "src" + File.separator + "test" + File.separator +
+                        "output_data" + File.separator + "CreateSimulateAndSaveSingleNeuronTest" + File.separator;
 
         SignalType signalType = SignalType.SQUARE_SIGNAL_DEFAULT;
 
@@ -46,7 +46,7 @@ class CreateSimulateAndSaveSingleNeuronTest {
                         .createEvenlySpacedBranchesOfEqualLength(2.0, 3));
 
         neuron.getAxon().setAxonTerminals(
-                new BranchGenerator(neuron.getAxon().getCoordinatesOfBranchEnd(), Dendrite.class, signalType)
+                new BranchGenerator(neuron.getAxon().getCoordinatesOfBranchEnd(), AxonTerminal.class, signalType)
                         .createEvenlySpacedBranchesOfEqualLength(2.0, 2));
 
         neuronPop = new ArrayList<Neuron>();
@@ -62,6 +62,6 @@ class CreateSimulateAndSaveSingleNeuronTest {
 
         PopulationSimulator simulator = new PopulationSimulator(neuronPop, signalSaver);
 
-        simulator.SimulateWithAllDendritesFiringRandomly(100);
+        simulator.simulateWithAllDendritesFiringRandomly(100, 0.1, 0.3);
     }
 }

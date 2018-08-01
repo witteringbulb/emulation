@@ -26,14 +26,16 @@ class NeuronTest {
         List<Dendrite> dendrites = new ArrayList<>();
         dendrites.add(dendrite1);
         dendrites.add(dendrite2);
-        Soma soma = new HeavisideSoma(new double[]{1.0, 0.5}, dendrites, 0.5);
+        Soma soma = new HeavisideSoma(new double[]{1.0, 0.5}, 0.5);
+        soma.setDendrites(dendrites);
 
         AxonTerminal axonTerminal1 = new AxonTerminalBuilder().setCoordinatesOfBranchBeginning(new double[]{2.0, 1.5}).setCoordinatesOfBranchEnd(new double[]{2.5, 1.7}).setSignalType(SignalType.SQUARE_SIGNAL_DEFAULT).createAxonTerminal();
         AxonTerminal axonTerminal2 = new AxonTerminalBuilder().setCoordinatesOfBranchBeginning(new double[]{2.0, 1.5}).setCoordinatesOfBranchEnd(new double[]{2.0, 2.1}).setSignalType(SignalType.SQUARE_SIGNAL_DEFAULT).createAxonTerminal();
         List<AxonTerminal> axonTerminals = new ArrayList<>();
         axonTerminals.add(axonTerminal1);
         axonTerminals.add(axonTerminal2);
-        Axon axon = new Axon(soma.getSomaLocation(), new double[]{2.0, 1.5}, SignalType.SQUARE_SIGNAL_DEFAULT, axonTerminals);
+        Axon axon = new Axon(soma.getSomaLocation(), new double[]{2.0, 1.5}, SignalType.SQUARE_SIGNAL_DEFAULT);
+        axon.setAxonTerminals(axonTerminals);
 
         neuron = new Neuron(soma, axon);
 
