@@ -30,22 +30,24 @@ class CreateSimulateAndSaveSingleNeuronTest {
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
 
-        String saveDirectory = "src"+ File.separator + "test" +File.separator + "CreateSimulateAndSaveSingleNeuronTest"+File.separator;
+        String saveDirectory =
+                "src" + File.separator + "test" + File.separator + "CreateSimulateAndSaveSingleNeuronTest"
+                + File.separator;
 
         SignalType signalType = SignalType.SQUARE_SIGNAL_DEFAULT;
 
         Soma soma = new HeavisideSoma(new double[]{0.0, 0.0}, 0.5);
-        Axon axon = new Axon(soma.getSomaLocation(), new double[]{2.0, 1.5}, SignalType.SQUARE_SIGNAL_DEFAULT);
+        Axon axon = new Axon(soma.getSomaLocation(), new double[]{0.0, 4.0}, SignalType.SQUARE_SIGNAL_DEFAULT);
 
         neuron = new Neuron(soma, axon);
 
         neuron.getSoma().setDendrites(
                 new BranchGenerator(neuron.getSoma().getSomaLocation(), Dendrite.class, signalType)
-                        .createEvenlySpacedBranchesOfEqualLength(1.0, 3));
+                        .createEvenlySpacedBranchesOfEqualLength(2.0, 3));
 
         neuron.getAxon().setAxonTerminals(
                 new BranchGenerator(neuron.getAxon().getCoordinatesOfBranchEnd(), Dendrite.class, signalType)
-                    .createEvenlySpacedBranchesOfEqualLength(1.0, 2));
+                        .createEvenlySpacedBranchesOfEqualLength(2.0, 2));
 
         neuronPop = new ArrayList<Neuron>();
         neuronPop.add(neuron);
@@ -56,8 +58,10 @@ class CreateSimulateAndSaveSingleNeuronTest {
     @Test
     public void testSimulateAndSaveSingleNeuron() {
 
-        //TODO: Save network
+        networkSaver.saveNeuronConfiguration();
 
         PopulationSimulator simulator = new PopulationSimulator(neuronPop, signalSaver);
+
+        simulator.SimulateWithAllDendritesFiringRandomly(100);
     }
 }
