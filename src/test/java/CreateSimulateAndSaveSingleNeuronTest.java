@@ -3,8 +3,6 @@ import neuron.branch.Axon;
 import neuron.branch.AxonTerminal;
 import neuron.branch.Dendrite;
 import neuron.branchGeneration.BranchGenerator;
-import neuron.builders.AxonTerminalBuilder;
-import neuron.builders.DendriteBuilder;
 import neuron.signal.SignalType;
 import neuron.soma.HeavisideSoma;
 import neuron.soma.Soma;
@@ -16,9 +14,6 @@ import simulation.PopulationSimulator;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CreateSimulateAndSaveSingleNeuronTest {
 
