@@ -16,6 +16,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class NeuronTest {
 
+    private final double deviationThreshold = 0.001;
+
     private Neuron neuron;
 
     @org.junit.jupiter.api.BeforeEach
@@ -34,7 +36,7 @@ class NeuronTest {
         List<AxonTerminal> axonTerminals = new ArrayList<>();
         axonTerminals.add(axonTerminal1);
         axonTerminals.add(axonTerminal2);
-        Axon axon = new Axon(soma.getSomaLocation(), new double[]{2.0, 1.5}, SignalType.SQUARE_SIGNAL_DEFAULT);
+        Axon axon = new Axon(soma.getSomaLocation(), new double[]{1.0, 4.5}, SignalType.SQUARE_SIGNAL_DEFAULT);
         axon.setAxonTerminals(axonTerminals);
 
         neuron = new Neuron(soma, axon);
@@ -47,6 +49,18 @@ class NeuronTest {
         assertEquals(0.1, neuron.getSoma().getDendrites().get(1).getCoordinatesOfBranchEnd()[0]);
 
         assertEquals(neuron.getSoma().getSomaLocation()[0], 1.0);
+    }
+
+    @Test
+    public void testThatBranchSignalFollowsBranch() {
+
+        this.neuron.fireAxon();
+        for (int t = 0; t < 5; t++) {
+            this.neuron.propagateSignalsOneTimeIncrement();
+            assertTrue(neuron.getAxon().getSignals().get(0).getMeanLocation()[0] - 1.0 < deviationThreshold);
+            assertTrue(neuron.getAxon().getSignals().get(0).getDirection()[0] < deviationThreshold);
+        }
+
     }
 
     @Test

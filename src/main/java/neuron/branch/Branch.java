@@ -69,12 +69,11 @@ public abstract class Branch {
     }
 
     public double getOrientationInRadians() {
-        //TODO: TEST THIS
         if (this.orientationInRadians == 0.0d) {
-            this.orientationInRadians = Math.PI/2 + Math.atan(
-                    this.coordinatesOfBranchEnd[0]-this.coordinatesOfBranchBeginning[0]
-                            /(this.coordinatesOfBranchEnd[1]-this.coordinatesOfBranchBeginning[1]));
-            if (this.coordinatesOfBranchBeginning[0] > this.coordinatesOfBranchEnd[0]) {
+            double xDifference = this.coordinatesOfBranchEnd[0]-this.coordinatesOfBranchBeginning[0];
+            double yDifference = this.coordinatesOfBranchEnd[1]-this.coordinatesOfBranchBeginning[1];
+            this.orientationInRadians = Math.atan(xDifference/yDifference);
+            if (xDifference < 0) {
                 this.orientationInRadians += Math.PI;
             }
         }
