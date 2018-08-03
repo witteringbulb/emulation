@@ -52,18 +52,6 @@ class NeuronTest {
     }
 
     @Test
-    public void testThatBranchSignalFollowsBranch() {
-
-        this.neuron.fireAxon();
-        for (int t = 0; t < 5; t++) {
-            this.neuron.propagateSignalsOneTimeIncrement();
-            assertTrue(neuron.getAxon().getSignals().get(0).getMeanLocation()[0] - 1.0 < deviationThreshold);
-            assertTrue(neuron.getAxon().getSignals().get(0).getDirection()[0] < deviationThreshold);
-        }
-
-    }
-
-    @Test
     public void testThatNoSignalAtDendritesMeansNoSignalAtAxonAndNoSignalAtAxonTerminals() {
 
         for (int t = 0; t < 1000; t++) {

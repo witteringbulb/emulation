@@ -7,22 +7,17 @@ public abstract class Signal {
 
     private final Branch parentBranch;
 
-    private double[] meanLocation;
-    private final double[] signalXYDirectionUnitVector;
-
     private double distanceFromSignalMeanToSignalOrigin = 0.0;
 
     private double amplitude;
     private double width;
+    private double signalSpeed;
 
     public Signal(double width, double amplitude, Branch parentBranch) {
         this.width = width;
         this.amplitude = amplitude;
+        this.signalSpeed = DefaultValues.DEFAULT_SIGNAL_SPEED;
         this.parentBranch = parentBranch;
-        this.meanLocation = parentBranch.getCoordinatesOfBranchBeginning();
-
-        this.signalXYDirectionUnitVector = new double[]{Math.sin(parentBranch.getOrientationInRadians()),
-                Math.cos(parentBranch.getOrientationInRadians())};
     }
 
     public void propagateOneTimeIncrement() {
@@ -30,9 +25,7 @@ public abstract class Signal {
     }
 
     private void updateDistanceFromSignalMeanToSignalOrigin() {
-        this.distanceFromSignalMeanToSignalOrigin += DefaultValues.DEFAULT_SIGNAL_SPEED;
-        this.meanLocation[0] += DefaultValues.DEFAULT_SIGNAL_SPEED * this.signalXYDirectionUnitVector[0];
-        this.meanLocation[1] += DefaultValues.DEFAULT_SIGNAL_SPEED * this.signalXYDirectionUnitVector[1];
+        this.distanceFromSignalMeanToSignalOrigin += this.signalSpeed;
     }
 
     public double getSignalStrengthAtLocation(double position) {
@@ -46,8 +39,6 @@ public abstract class Signal {
 
     public abstract double signalDistributionFunction(double position);
 
-    public double[] getMeanLocation() { return meanLocation; }
-
     public double getAmplitude() { return amplitude; }
 
     public double getDistanceFromSignalMeanToSignalOrigin() {
@@ -56,8 +47,10 @@ public abstract class Signal {
 
     public double getWidth() { return width; }
 
-    public double[] getDirection() { return this.signalXYDirectionUnitVector; }
-
     public abstract String getTypeAsString();
+
+    public Branch getParentBranch() {
+        return this.parentBranch;
+    }
 
 }

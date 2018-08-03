@@ -10,6 +10,8 @@ import neuron.signal.SignalType;
 
 public abstract class Branch {
 
+    private final int uniqueId;
+
     private final double[] coordinatesOfBranchBeginning;
     private double[] coordinatesOfBranchEnd;
     private final SignalType signalType;
@@ -27,6 +29,9 @@ public abstract class Branch {
         if (coordinatesOfBranchBeginning.length !=2 || coordinatesOfBranchEnd.length != 2) {
             throw new IllegalArgumentException("Coordinates arrays must both be of length 2");
         }
+
+        this.uniqueId = BranchIdGeneratorStatic.getNextAvailableUniqueId();
+
         this.coordinatesOfBranchBeginning = coordinatesOfBranchBeginning;
         this.coordinatesOfBranchEnd = coordinatesOfBranchEnd;
         this.signalType = signalType;
@@ -87,6 +92,10 @@ public abstract class Branch {
                 this.getCoordinatesOfBranchBeginning()[1],
                 this.getCoordinatesOfBranchEnd()[0],
                 this.getCoordinatesOfBranchEnd()[1]};
+    }
+
+    public int getBranchUniqueId() {
+        return  this.uniqueId;
     }
 
 }

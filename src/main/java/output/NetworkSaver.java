@@ -1,6 +1,7 @@
 package output;
 
 import neuron.Neuron;
+import neuron.branch.Branch;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -19,10 +20,9 @@ public class NetworkSaver {
 
     public void saveNeuronConfiguration() {
 
-        List<double[]> allBranchBeginningCoordinates = this.neurons.stream()
+        List<Branch> allBranches = this.neurons.stream()
                 .map(neuron -> neuron.getAllBranchesInSingleList())
                 .flatMap(branches -> branches.stream())
-                .map(branch -> branch.getBranchLocationInfo())
                 .collect(Collectors.toList());
 
         String fileName = "branches.csv";
@@ -37,13 +37,14 @@ public class NetworkSaver {
 
             PrintWriter pw = new PrintWriter(file);
 
-            pw.write("x1,y1,x2,y2\n");
+            pw.write("x1,y1,x2,y2,branch_uid\n");
 
-            allBranchBeginningCoordinates.forEach(branchCoordinates -> pw.write(
-                            branchCoordinates[0]+","
-                            + branchCoordinates[1]+","
-                            + branchCoordinates[2]+","
-                            + branchCoordinates[3]+"\n"
+            allBranches.forEach(branch -> pw.write(
+                            branch.getCoordinatesOfBranchBeginning()[0]+","
+                            + branch.getCoordinatesOfBranchBeginning()[1]+","
+                            + branch.getCoordinatesOfBranchEnd()[0]+","
+                            + branch.getCoordinatesOfBranchEnd()[1]+","
+                            + branch.getBranchUniqueId() + "\n"
             ));
 
             pw.close();
