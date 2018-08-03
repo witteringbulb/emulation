@@ -73,7 +73,7 @@ public abstract class Branch {
             double xDifference = this.coordinatesOfBranchEnd[0]-this.coordinatesOfBranchBeginning[0];
             double yDifference = this.coordinatesOfBranchEnd[1]-this.coordinatesOfBranchBeginning[1];
             this.orientationInRadians = Math.atan(xDifference/yDifference);
-            if (xDifference < 0) {
+            if (yDifference < 0) {
                 this.orientationInRadians += Math.PI;
             }
         }
