@@ -38,9 +38,10 @@ public class BranchFactory<T extends Branch> {
 
     public Branch getBranch(double xCoordinateOfBranchEnd, double yCoordinateOfBranchEnd) {
         if (branchType == Dendrite.class) {
+            //Dendrites are made back to front, ending at the soma
             return new DendriteBuilder().setSignalType(signalType)
-                                        .setCoordinatesOfBranchBeginning(coordinatesOfBranchBeginning)
-                                        .setCoordinatesOfBranchEnd(new double[]{xCoordinateOfBranchEnd, yCoordinateOfBranchEnd})
+                                        .setCoordinatesOfBranchBeginning(new double[]{xCoordinateOfBranchEnd, yCoordinateOfBranchEnd})
+                                        .setCoordinatesOfBranchEnd(coordinatesOfBranchBeginning)
                                         .createDendrite();
         } else if (branchType == AxonTerminal.class) {
             return new AxonTerminalBuilder().setSignalType(signalType)
