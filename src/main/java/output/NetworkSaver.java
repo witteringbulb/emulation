@@ -37,7 +37,7 @@ public class NetworkSaver {
 
             PrintWriter pw = new PrintWriter(file);
 
-            pw.write("x1,y1,x2,y2,branch_uid,orientation_radians\n");
+            pw.write("x1,y1,x2,y2,branch_uid,branch_type\n");
 
             allBranches.forEach(branch -> pw.write(
                             branch.getCoordinatesOfBranchBeginning()[0]+","
@@ -45,7 +45,7 @@ public class NetworkSaver {
                             + branch.getCoordinatesOfBranchEnd()[0]+","
                             + branch.getCoordinatesOfBranchEnd()[1]+","
                             + branch.getBranchUniqueId()+","
-                            + branch.getOrientationInRadians() + "\n"
+                            + branch.getBranchType() + "\n"
             ));
 
             pw.close();

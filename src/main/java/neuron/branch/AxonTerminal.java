@@ -15,4 +15,6 @@ public class AxonTerminal extends Branch {
         this.addSignal(DefaultValues.DEFAULT_SIGNAL_AMPLITUDE);
     }
 
+    public String getBranchType() {return "axonTerminal";}
+
 }

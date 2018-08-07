@@ -98,4 +98,6 @@ public abstract class Branch {
         return  this.uniqueId;
     }
 
+    public abstract String getBranchType();
+
 }

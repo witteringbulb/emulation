@@ -45,6 +45,10 @@ public abstract class Signal {
         return distanceFromSignalMeanToSignalOrigin;
     }
 
+    public double getDistanceAlongBranchAsRatio() {
+        return this.getDistanceFromSignalMeanToSignalOrigin() / this.getParentBranch().getLength();
+    }
+
     public double getWidth() { return width; }
 
     public abstract String getTypeAsString();

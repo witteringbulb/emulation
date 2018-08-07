@@ -49,4 +49,6 @@ public class Axon extends Branch {
 
     public void setAxonTerminals(List<AxonTerminal> axonTerminals) { this.axonTerminals = axonTerminals; }
 
+    public String getBranchType() {return "axon";}
+
 }

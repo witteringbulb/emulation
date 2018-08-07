@@ -14,4 +14,6 @@ public class Dendrite extends Branch {
         this.addSignal(amplitude);
     }
 
+    public String getBranchType() {return "dendrite";}
+
 }
