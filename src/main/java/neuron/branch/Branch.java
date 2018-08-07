@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import defaults.DefaultValues;
 import neuron.factories.SignalFactory;
 import neuron.signal.Signal;
 import neuron.signal.SignalType;
@@ -19,7 +20,8 @@ public abstract class Branch {
     private final SignalFactory signalFactory;
 
     private double length;
-    private double orientationInRadians;
+
+    private int timeStepsSinceFiring;
 
     private List<Signal> signals = new ArrayList<Signal>();
 
@@ -36,6 +38,7 @@ public abstract class Branch {
         this.coordinatesOfBranchEnd = coordinatesOfBranchEnd;
         this.signalType = signalType;
         this.signalFactory = new SignalFactory(this.signalType);
+        this.timeStepsSinceFiring = 10000;
     }
 
     public void addSignal(double amplitude) {
@@ -51,6 +54,7 @@ public abstract class Branch {
                 signalsIterator.remove();
             }
         }
+        this.timeStepsSinceFiring++;
     }
 
     public double getSignalMagnitudeAtEndOfBranch() {
@@ -73,31 +77,25 @@ public abstract class Branch {
         return this.length;
     }
 
-    public double getOrientationInRadians() {
-        if (this.orientationInRadians == 0.0d) {
-            double xDifference = this.coordinatesOfBranchEnd[0]-this.coordinatesOfBranchBeginning[0];
-            double yDifference = this.coordinatesOfBranchEnd[1]-this.coordinatesOfBranchBeginning[1];
-            this.orientationInRadians = Math.atan(xDifference/yDifference);
-            if (yDifference < 0) {
-                this.orientationInRadians += Math.PI;
-            }
+    public void fireIfAllowed(double amplitude) {
+        if (checkIfMinStepsBetweenFiringExceeded()) {
+            this.fire(amplitude);
+            this.timeStepsSinceFiring = 0;
         }
-        return this.orientationInRadians;
     }
 
-    public List<Signal> getSignals() {return signals;}
-
-    public double[] getBranchLocationInfo() {
-        return new double[]{this.getCoordinatesOfBranchBeginning()[0],
-                this.getCoordinatesOfBranchBeginning()[1],
-                this.getCoordinatesOfBranchEnd()[0],
-                this.getCoordinatesOfBranchEnd()[1]};
+    public boolean checkIfMinStepsBetweenFiringExceeded() {
+        return this.timeStepsSinceFiring >= DefaultValues.MIN_TIMESTEPS_BETWEEN_FIRING;
     }
+
+    public abstract void fire(double amplitude);
 
     public int getBranchUniqueId() {
         return  this.uniqueId;
     }
 
     public abstract String getBranchType();
+
+    public List<Signal> getSignals() { return signals; }
 
 }

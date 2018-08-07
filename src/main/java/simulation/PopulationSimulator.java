@@ -30,7 +30,7 @@ public class PopulationSimulator {
             neuron.propagateSignalsOneTimeIncrement();
             for (Dendrite dendrite : neuron.getSoma().getDendrites()) {
                 if (Math.random() < firingProbabilityPerDendritePerTimeIncrement) {
-                    dendrite.fire(dendriteFiringAmplitude);
+                    dendrite.fireIfAllowed(dendriteFiringAmplitude);
                 }
             }
         }

@@ -1,5 +1,6 @@
 package neuron;
 
+import defaults.DefaultValues;
 import neuron.branch.Axon;
 import neuron.branch.Branch;
 import neuron.soma.Soma;
@@ -8,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Neuron {
+
+    private final double AXON_FIRE_AMPLITUDE = DefaultValues.DEFAULT_SIGNAL_AMPLITUDE;
 
     private Soma soma;
     private Axon axon;
@@ -19,7 +22,7 @@ public class Neuron {
     }
 
     public void fireAxon() {
-        this.axon.fire();
+        this.axon.fireIfAllowed(AXON_FIRE_AMPLITUDE);
     }
 
     public void propagateSignalsOneTimeIncrement() {

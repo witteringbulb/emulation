@@ -8,6 +8,9 @@ import java.util.List;
 
 public class Axon extends Branch {
 
+    private final double AXON_TERMINAL_FIRING_AMP = DefaultValues.DEFAULT_SIGNAL_AMPLITUDE;
+    private final double AXON_TERMINAL_FIRE_THRESH = DefaultValues.DEFAULT_AXON_TERMINAL_FIRE_THRESHOLD;
+
     private List<AxonTerminal> axonTerminals;
 
     public Axon(double[] coordinatesOfBranchBeginning,
@@ -24,8 +27,8 @@ public class Axon extends Branch {
         super(coordinatesOfBranchBeginning, coordinatesOfBranchEnd, signalType);
     }
 
-    public void fire() {
-        this.addSignal(DefaultValues.DEFAULT_SIGNAL_AMPLITUDE);
+    public void fire(double amplitude) {
+        this.addSignal(amplitude);
     }
 
     public void buildAxonTerminalsAndConnectThemToNearbyDendrites(int numberToBuild) {
@@ -38,8 +41,8 @@ public class Axon extends Branch {
         this.propagateSignalsOneTimeIncrement();
         this.axonTerminals.forEach(axonTerminal -> axonTerminal.propagateSignalsOneTimeIncrement());
 
-        if (this.getSignalMagnitudeAtEndOfBranch() > DefaultValues.DEFAULT_AXON_TERMINAL_FIRE_THRESHOLD) {
-            this.axonTerminals.forEach(axonTerminal -> axonTerminal.fire());
+        if (this.getSignalMagnitudeAtEndOfBranch() > AXON_TERMINAL_FIRE_THRESH) {
+            this.axonTerminals.forEach(axonTerminal -> axonTerminal.fireIfAllowed(AXON_TERMINAL_FIRING_AMP));
         }
     }
 

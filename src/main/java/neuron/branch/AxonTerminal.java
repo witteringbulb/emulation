@@ -11,8 +11,8 @@ public class AxonTerminal extends Branch {
         super(coordinatesOfBranchBeginning, coordinatesOfBranchEnd, signalType);
     }
 
-    public void fire() {
-        this.addSignal(DefaultValues.DEFAULT_SIGNAL_AMPLITUDE);
+    public void fire(double amplitude) {
+        this.addSignal(amplitude);
     }
 
     public String getBranchType() {return "axonTerminal";}
