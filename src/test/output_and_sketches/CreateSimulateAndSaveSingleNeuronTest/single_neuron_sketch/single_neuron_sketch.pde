@@ -17,7 +17,7 @@ final int BRANCH_RED = 100;
 final int BRANCH_GREEN = 100;
 final int BRANCH_BLUE = 50;
 
-int numberOfFramesInGif = 100;
+int numberOfFramesInGif = 500;
 int startFrame = 0;
 int frame;
 

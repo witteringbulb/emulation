@@ -16,7 +16,6 @@ public class SignalFactory {
     public Signal getSignal(double amplitude, Branch parentBranch) {
         Class signalClass = signalType.getSignalClass();
         double width = signalType.getWidth();
-        double displacement = signalType.getDisplacement();
 
         if (signalClass == SquareSignal.class) {
             return new SquareSignal(width, amplitude, parentBranch);

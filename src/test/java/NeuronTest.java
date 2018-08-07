@@ -67,7 +67,7 @@ class NeuronTest {
     @Test
     public void testThatBelowThresholdSignalAtDendritesMeansNoSignalAtAxonAndNoSignalAtAxonTerminals() {
 
-        neuron.getSoma().getDendrites().get(0).fire(0.1);
+        neuron.getSoma().getDendrites().get(0).fireIfAllowed(0.1);
         for (int t = 0; t < 1000; t++) {
             this.neuron.propagateSignalsOneTimeIncrement();
             assertEquals(neuron.getAxon().getSignalMagnitudeAtEndOfBranch(), 0.0);
@@ -81,7 +81,7 @@ class NeuronTest {
     @Test
     public void testThatAboveThresholdSignalAtDendritesMeansSignalAtAxonAndSignalAtAxonTerminals() {
 
-        neuron.getSoma().getDendrites().get(0).fire(5.0);
+        neuron.getSoma().getDendrites().get(0).fireIfAllowed(5.0);
         double cumulativeAxonSignal = 0.0;
         double cumulativeAxonPotentialSignal = 0.0;
         for (int t = 0; t < 1000; t++) {
