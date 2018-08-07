@@ -4,8 +4,10 @@ final String dataDirectory = dataPath("");
 
 final int IMAGE_BORDER = 100;
 
-final int BRANCH_STROKE_WEIGHT = 255;
-final float SIGNAL_STROKE_WEIGHT_SCALING_COEFF = 1;
+final int BRANCH_ALPHA_BASE = 255;
+final float SIGNAL_OPACITY_BASE = 1;
+final float SIGNAL_STROKE_WEIGHT_BASE = 1;
+final int FADE_ALPHA = 20;
 
 final int SIGNAL_RED = 255;
 final int SIGNAL_GREEN = 255;
@@ -21,6 +23,8 @@ int frame;
 
 float[] minMaxXY;
 
+HashMap<Integer, Branch> allBranches;
+
 GifMaker gifExport;
 
 void setup() {
@@ -33,14 +37,16 @@ void setup() {
   gifExport.setRepeat(0);        // make it an "endless" animation
   //gifExport.setTransparent(0,0,0);  // black is transparent
   
-  resetImageAndRemoveDrawnSignals();
+  allBranches = loadBranches();
+  
+  drawBranchesForFirstTime();
   
   frame = 0;
 }
 
 void draw() {
   
-  resetImageAndRemoveDrawnSignals();
+  fadeSignals();
   
   drawSignals();
   
@@ -56,36 +62,32 @@ void draw() {
   
 }
 
-public void resetImageAndRemoveDrawnSignals() {
+public void drawBranchesForFirstTime() {
   fill(#000000, 255);
   rect(0,0,width,height);
-  drawBranches();
+  drawBranches(BRANCH_ALPHA_BASE);
 }
 
-public void drawBranches() {
+public void fadeSignals() {
+  fill(#000000, FADE_ALPHA);
+  rect(0,0,width,height);
+  drawBranches(FADE_ALPHA);
+}
+
+public void drawBranches(int alpha) {
+  for (Branch branch : allBranches.values()) {
+    branch.drawBranch(alpha);
+  }
+}
+
+public HashMap<Integer, Branch> loadBranches() {
+  HashMap<Integer, Branch> branchesMap = new HashMap<Integer, Branch>();
   Table branches = loadTable("branches.csv", "header");
   for (TableRow row : branches.rows()) {
-    float x1 = scaleXValToFit1000by1000Image(row.getFloat("x1"));
-    float y1 = scaleYValToFit1000by1000Image(row.getFloat("y1"));
-    float x2 = scaleXValToFit1000by1000Image(row.getFloat("x2"));
-    float y2 = scaleYValToFit1000by1000Image(row.getFloat("y2"));
-    stroke(BRANCH_RED, BRANCH_GREEN, BRANCH_BLUE, BRANCH_STROKE_WEIGHT);
-    
-    line(x1, y1, x2, y2);
-    
-  } 
-}
-
-public float scaleXValToFit1000by1000Image(float xValueToScale) {
-  float x1 = getMinMaxXY()[0];
-  float x2 = getMinMaxXY()[2];
-  return 1000*(xValueToScale + IMAGE_BORDER - x1)/(2*IMAGE_BORDER + x2 - x1);
-}
-
-public float scaleYValToFit1000by1000Image(float yValueToScale) {
-  float y1 = getMinMaxXY()[1];
-  float y2 = getMinMaxXY()[3];
-  return 1000*(yValueToScale + IMAGE_BORDER - y1)/(2*IMAGE_BORDER + y2 - y1);
+    Branch branch = new Branch(row.getString("branch_type"), row.getFloat("x1"), row.getFloat("y1"), row.getFloat("x2"), row.getFloat("y2"));
+    branchesMap.put(row.getInt("uid"), branch);
+  }
+  return branchesMap;
 }
 
 public float[] getMinMaxXY() {
@@ -114,26 +116,59 @@ public float[] getMinMaxXY() {
 public void drawSignals() {
   Table signalsForThisFrame = loadTable(frame+"_allSignals.csv", "header");
   for (TableRow signal : signalsForThisFrame.rows()) {
-    if (signal.getString("type").equals("SquareSignal")) {drawSquareSignal(signal);}
-    else { throw new IllegalArgumentException("Signal type not recognised");}
+    drawSignal(signal)
   }
 }
 
-public void drawSquareSignal(TableRow signal) {
-  float mean_loc_x = scaleXValToFit1000by1000Image(signal.getFloat("mean_loc_x"));
-  float mean_loc_y = scaleYValToFit1000by1000Image(signal.getFloat("mean_loc_y"));
-  float direction_x = signal.getFloat("direction_x");
-  float direction_y = signal.getFloat("direction_y");
+public void drawSignal(TableRow signal) {
+  int parentBranchUid = signal.getInt("branch_uid");
+  float ratioDistanceAlongBranch = signal.getFloat("ratio_distance_along_branch");
   float amplitude = signal.getFloat("amplitude");
-  float signal_width = signal.getFloat("width");
   
-  float x1 = mean_loc_x - signal_width * cos(atan(direction_x/direction_y));
-  float x2 = mean_loc_x + signal_width * cos(atan(direction_x/direction_y));
+  allBranches.get(parentBranchUid).drawSignal(ratioDistanceAlongBranch, amplitude);
+}
+
+public float scaleXValToFitImage(float xValueToScale) {
+  float x1 = getMinMaxXY()[0];
+  float x2 = getMinMaxXY()[2];
+  return width*(xValueToScale + IMAGE_BORDER - x1)/(2*IMAGE_BORDER + x2 - x1);
+}
+
+public float scaleYValToFitImage(float yValueToScale) {
+  float y1 = getMinMaxXY()[1];
+  float y2 = getMinMaxXY()[3];
+  return height*(yValueToScale + IMAGE_BORDER - y1)/(2*IMAGE_BORDER + y2 - y1);
+}
+
+class Branch {
   
-  float y1 = mean_loc_y - signal_width * sin(atan(direction_x/direction_y));
-  float y2 = mean_loc_y + signal_width * sin(atan(direction_x/direction_y));
+  public final String branchType;
+  public final float scaledXBeginning;
+  public final float scaledYBeginning;
+  public final float scaledXEnd;
+  public final float scaledYEnd;
   
-  stroke(SIGNAL_RED, SIGNAL_GREEN, SIGNAL_BLUE, round(amplitude*SIGNAL_STROKE_WEIGHT_SCALING_COEFF));
+  public Branch(String branchType, float xBeginning, float yBeginning, float xEnd, float yEnd) {
+    this.branchType = branchType;
+    this.scaledXBeginning = scaleXValToFitImage(xBeginning);
+    this.scaledYBeginning = scaleYValToFitImage(yBeginning);
+    this.scaledXEnd = scaleXValToFitImage(xEnd);
+    this.scaledYEnd = scaleYValToFitImage(yEnd);
+  }
   
-  line(x1, y1, x2, y2);
+  public void drawBranch(int alpha) {
+    stroke(color(BRANCH_RED, BRANCH_GREEN, BRANCH_BLUE), alpha);
+    line(scaledXBeginning, scaledYBeginning, scaledXEnd, scaledYEnd);
+  }
+  
+  public void drawSignal(float ratioDistanceAlongBranch, float amplitude) {
+  
+  float xSignal = ratioDistanceAlongBranch * (this.scaledXEnd - this.scaledXBeginning) + this.scaledXBeginning;
+  float ySignal = ratioDistanceAlongBranch * (this.scaledYEnd - this.scaledYBeginning) + this.scaledYBeginning; 
+    
+  strokeWeight(round(amplitude * SIGNAL_STROKE_WEIGHT_BASE));
+  stroke(color(SIGNAL_RED, SIGNAL_GREEN, SIGNAL_BLUE), max(round(amplitude*SIGNAL_OPACITY_BASE), 255));
+  point(xSignal, ySignal);
+  }
+  
 }
