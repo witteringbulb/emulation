@@ -9,13 +9,21 @@ final float SIGNAL_OPACITY_BASE = 1;
 final float SIGNAL_STROKE_WEIGHT_BASE = 10;
 final int FADE_ALPHA = 20;
 
-final int SIGNAL_RED = 255;
-final int SIGNAL_GREEN = 255;
-final int SIGNAL_BLUE = 255;
+final int SIGNAL_EXCITE_RED = 46;
+final int SIGNAL_EXCITE_GREEN = 187;
+final int SIGNAL_EXCITE_BLUE = 234;
 
-final int BRANCH_RED = 100;
-final int BRANCH_GREEN = 100;
-final int BRANCH_BLUE = 50;
+final int SIGNAL_INHIB_RED = 11;
+final int SIGNAL_INHIB_GREEN = 57;
+final int SIGNAL_INHIB_BLUE = 84;
+
+final int SIGNAL_AXON_RED = 234;
+final int SIGNAL_AXON_GREEN = 234;
+final int SIGNAL_AXON_BLUE = 234;
+
+final int BRANCH_RED = 145;
+final int BRANCH_GREEN = 113;
+final int BRANCH_BLUE = 27;
 
 int numberOfFramesInGif = 500;
 int startFrame = 0;
@@ -167,7 +175,14 @@ class Branch {
   float ySignal = ratioDistanceAlongBranch * (this.scaledYEnd - this.scaledYBeginning) + this.scaledYBeginning; 
     
   strokeWeight(round(amplitude * SIGNAL_STROKE_WEIGHT_BASE));
-  stroke(color(SIGNAL_RED, SIGNAL_GREEN, SIGNAL_BLUE), max(round(amplitude*SIGNAL_OPACITY_BASE), 255));
+  if (branchType.equals("dendrite") && amplitude >= 0) {
+    stroke(color(SIGNAL_EXCITE_RED, SIGNAL_EXCITE_RED, SIGNAL_EXCITE_RED), max(round(abs(amplitude)*SIGNAL_OPACITY_BASE), 255));
+  } else if (branchType.equals("dendrite") && amplitude < 0) {
+    stroke(color(SIGNAL_INHIB_RED, SIGNAL_INHIB_RED, SIGNAL_INHIB_RED), max(round(abs(amplitude)*SIGNAL_OPACITY_BASE), 255));
+  } else {
+    stroke(color(SIGNAL_AXON_RED, SIGNAL_AXON_RED, SIGNAL_AXON_RED), max(round(abs(amplitude)*SIGNAL_OPACITY_BASE), 255));
+  }
+
   point(xSignal, ySignal);
   }
   
