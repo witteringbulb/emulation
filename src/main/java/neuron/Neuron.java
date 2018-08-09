@@ -22,7 +22,7 @@ public class Neuron {
     }
 
     public void fireAxon() {
-        this.axon.fireIfAllowed(AXON_FIRE_AMPLITUDE);
+        this.axon.fire(AXON_FIRE_AMPLITUDE);
     }
 
     public void propagateSignalsOneTimeIncrement() {

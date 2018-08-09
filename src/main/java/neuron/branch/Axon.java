@@ -13,12 +13,15 @@ public class Axon extends Branch {
 
     private List<AxonTerminal> axonTerminals;
 
+    private int timeStepsSinceFiring;
+
     public Axon(double[] coordinatesOfBranchBeginning,
                 double[] coordinatesOfBranchEnd,
                 SignalType signalType,
                 List<AxonTerminal> axonTerminals) {
         super(coordinatesOfBranchBeginning, coordinatesOfBranchEnd, signalType);
         this.axonTerminals = axonTerminals;
+        this.timeStepsSinceFiring = 10000;
     }
 
     public Axon(double[] coordinatesOfBranchBeginning,
@@ -29,6 +32,7 @@ public class Axon extends Branch {
 
     public void fire(double amplitude) {
         this.addSignal(amplitude);
+        this.timeStepsSinceFiring = 0;
     }
 
     public void buildAxonTerminalsAndConnectThemToNearbyDendrites(int numberToBuild) {
@@ -37,12 +41,18 @@ public class Axon extends Branch {
         this.axonTerminals = axonTerminals;
     }
 
+    @Override
+    public void propagateSignalsOneTimeIncrement() {
+        this.timeStepsSinceFiring++;
+        super.propagateSignalsOneTimeIncrement();
+    }
+
     public void propagateAxonAndAxonTerminalSignalsForwardOneTimeIncrement() {
         this.propagateSignalsOneTimeIncrement();
         this.axonTerminals.forEach(axonTerminal -> axonTerminal.propagateSignalsOneTimeIncrement());
 
         if (this.getSignalMagnitudeAtEndOfBranch() > AXON_TERMINAL_FIRE_THRESH) {
-            this.axonTerminals.forEach(axonTerminal -> axonTerminal.fireIfAllowed(AXON_TERMINAL_FIRING_AMP));
+            this.axonTerminals.forEach(axonTerminal -> axonTerminal.fire(AXON_TERMINAL_FIRING_AMP));
         }
     }
 
@@ -53,5 +63,7 @@ public class Axon extends Branch {
     public void setAxonTerminals(List<AxonTerminal> axonTerminals) { this.axonTerminals = axonTerminals; }
 
     public String getBranchType() {return "axon";}
+
+    public int getTimeStepsSinceFiring() { return timeStepsSinceFiring;}
 
 }

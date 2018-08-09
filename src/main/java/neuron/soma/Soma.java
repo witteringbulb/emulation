@@ -1,5 +1,6 @@
 package neuron.soma;
 
+import defaults.DefaultValues;
 import javafx.util.Pair;
 import neuron.Neuron;
 import neuron.branch.Dendrite;
@@ -7,6 +8,9 @@ import neuron.branch.Dendrite;
 import java.util.List;
 
 public abstract class Soma {
+
+    private double IMMEDIATE_POST_FIRE_PEN_ABS = DefaultValues.IMMEDIATE_POST_FIRE_PEN_ABS;
+    private double POST_FIRE_PENALTY_DECAY_ABS = DefaultValues.POST_FIRE_PENALTY_DECAY_ABS;
 
     private Neuron parentNeuron;
     public void setParentNeuron(Neuron neuron) {
@@ -37,6 +41,11 @@ public abstract class Soma {
     }
 
     public abstract boolean doesAxonFireAtCurrentTimeIncrement();
+
+    public double getAxonRecentFiringExponentialPenalty() {
+        return -IMMEDIATE_POST_FIRE_PEN_ABS
+                * Math.exp(-POST_FIRE_PENALTY_DECAY_ABS * this.parentNeuron.getAxon().getTimeStepsSinceFiring());
+    }
 
     public double sumSignalsFromEndsOfDendritesForThisTimeIncrement() {
         return this.getDendrites().stream()

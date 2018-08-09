@@ -10,6 +10,7 @@ public class DefaultValues {
 
     public static final double DEFAULT_AXON_TERMINAL_FIRE_THRESHOLD = 0.3;
 
-    public static final int MIN_TIMESTEPS_BETWEEN_FIRING = 5;
+    public static final double IMMEDIATE_POST_FIRE_PEN_ABS = 1;
+    public static final double POST_FIRE_PENALTY_DECAY_ABS = 0.2;
 
 }

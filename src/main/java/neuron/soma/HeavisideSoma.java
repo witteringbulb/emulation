@@ -16,7 +16,8 @@ public class HeavisideSoma extends Soma {
     }
 
     public boolean doesAxonFireAtCurrentTimeIncrement() {
-        return this.sumSignalsFromEndsOfDendritesForThisTimeIncrement() >= activationThreshold;
+        return this.sumSignalsFromEndsOfDendritesForThisTimeIncrement()
+                + this.getAxonRecentFiringExponentialPenalty() >= activationThreshold;
     }
 
 }

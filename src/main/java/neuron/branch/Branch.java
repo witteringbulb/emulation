@@ -21,8 +21,6 @@ public abstract class Branch {
 
     private double length;
 
-    private int timeStepsSinceFiring;
-
     private List<Signal> signals = new ArrayList<Signal>();
 
     public Branch(double[] coordinatesOfBranchBeginning,
@@ -38,7 +36,6 @@ public abstract class Branch {
         this.coordinatesOfBranchEnd = coordinatesOfBranchEnd;
         this.signalType = signalType;
         this.signalFactory = new SignalFactory(this.signalType);
-        this.timeStepsSinceFiring = 10000;
     }
 
     public void addSignal(double amplitude) {
@@ -54,7 +51,6 @@ public abstract class Branch {
                 signalsIterator.remove();
             }
         }
-        this.timeStepsSinceFiring++;
     }
 
     public double getSignalMagnitudeAtEndOfBranch() {
@@ -75,17 +71,6 @@ public abstract class Branch {
                             + Math.pow(this.coordinatesOfBranchEnd[1] - this.coordinatesOfBranchBeginning[1], 2.0));
         }
         return this.length;
-    }
-
-    public void fireIfAllowed(double amplitude) {
-        if (checkIfMinStepsBetweenFiringExceeded()) {
-            this.fire(amplitude);
-            this.timeStepsSinceFiring = 0;
-        }
-    }
-
-    public boolean checkIfMinStepsBetweenFiringExceeded() {
-        return this.timeStepsSinceFiring >= DefaultValues.MIN_TIMESTEPS_BETWEEN_FIRING;
     }
 
     public abstract void fire(double amplitude);

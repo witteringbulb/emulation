@@ -72,12 +72,14 @@ void draw() {
 
 public void drawBranchesForFirstTime() {
   fill(#000000, 255);
+  stroke(#000000, 255);
   rect(0,0,width,height);
   drawBranches(BRANCH_ALPHA_BASE);
 }
 
 public void fadeSignals() {
   fill(#000000, FADE_ALPHA);
+  stroke(#000000, 255);
   rect(0,0,width,height);
   drawBranches(FADE_ALPHA);
 }
