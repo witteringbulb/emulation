@@ -10,7 +10,7 @@ public class SquareSignal extends Signal {
 
     public double signalDistributionFunction(double position) {
         double adjustedPosition = position - this.getDistanceFromSignalMeanToSignalOrigin();
-        return 0 <  adjustedPosition && adjustedPosition < this.getWidth() ? 1 : 0;
+        return -this.getWidth()/2 < adjustedPosition && adjustedPosition < this.getWidth()/2 ? 1 : 0;
     }
 
     public String getTypeAsString() {

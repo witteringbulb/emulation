@@ -58,6 +58,6 @@ class CreateSimulateAndSaveSingleNeuronTest {
 
         PopulationSimulator simulator = new PopulationSimulator(neuronPop, signalSaver);
 
-        simulator.simulateWithAllDendritesFiringRandomly(500, 0.07, 0.3);
+        simulator.simulateWithAllDendritesFiringRandomly(200, 0.03, 0.3);
     }
 }
