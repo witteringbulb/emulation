@@ -34,7 +34,7 @@ public abstract class Signal {
 
     public boolean hasFullyPassedPosition(double position) {
         return this.getDistanceFromSignalMeanToSignalOrigin() > position
-                && this.getSignalStrengthAtLocation(position) < DefaultValues.DEFAULT_ZERO_SIGNAL_THRESH;
+                && Math.abs(this.getSignalStrengthAtLocation(position)) < DefaultValues.DEFAULT_ZERO_SIGNAL_THRESH;
     }
 
     public abstract double signalDistributionFunction(double position);
