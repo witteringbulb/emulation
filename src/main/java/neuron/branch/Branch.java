@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import defaults.DefaultValues;
 import neuron.factories.SignalFactory;
 import neuron.signal.Signal;
 import neuron.signal.SignalType;
 
 public abstract class Branch {
 
-    private final int uniqueId;
+    private final int uniqueBranchId;
 
     private final double[] coordinatesOfBranchBeginning;
     private double[] coordinatesOfBranchEnd;
@@ -30,7 +29,7 @@ public abstract class Branch {
             throw new IllegalArgumentException("Coordinates arrays must both be of length 2");
         }
 
-        this.uniqueId = BranchIdGeneratorStatic.getNextAvailableUniqueId();
+        this.uniqueBranchId = BranchIdGeneratorStatic.getNextAvailableUniqueId();
 
         this.coordinatesOfBranchBeginning = coordinatesOfBranchBeginning;
         this.coordinatesOfBranchEnd = coordinatesOfBranchEnd;
@@ -76,7 +75,7 @@ public abstract class Branch {
     public abstract void fire(double amplitude);
 
     public int getBranchUniqueId() {
-        return  this.uniqueId;
+        return  this.uniqueBranchId;
     }
 
     public abstract String getBranchType();
