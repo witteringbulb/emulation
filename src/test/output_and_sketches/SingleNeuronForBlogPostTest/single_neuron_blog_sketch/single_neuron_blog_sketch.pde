@@ -4,7 +4,6 @@ final String dataDirectory = dataPath("");
 
 final int IMAGE_BORDER = 100;
 
-final int BRANCH_ALPHA_BASE = 255;
 final float SIGNAL_OPACITY_BASE = 1;
 final float SIGNAL_STROKE_WEIGHT_BASE = 10;
 final int FADE_ALPHA = 20;
@@ -13,19 +12,15 @@ final int SIGNAL_EXCITE_RED = 46;
 final int SIGNAL_EXCITE_GREEN = 187;
 final int SIGNAL_EXCITE_BLUE = 234;
 
-final int SIGNAL_INHIB_RED = 11;
-final int SIGNAL_INHIB_GREEN = 57;
-final int SIGNAL_INHIB_BLUE = 84;
+final int SIGNAL_INHIB_RED = round(145*1.5);//234;
+final int SIGNAL_INHIB_GREEN = round(113*1.5);//105;
+final int SIGNAL_INHIB_BLUE = round(27*1.5);//46;
 
 final int SIGNAL_AXON_RED = 234;
 final int SIGNAL_AXON_GREEN = 234;
 final int SIGNAL_AXON_BLUE = 234;
 
-final int BRANCH_RED = 145;
-final int BRANCH_GREEN = 113;
-final int BRANCH_BLUE = 27;
-
-int numberOfFramesInGif = 200;
+int numberOfFramesInVideo = 165;
 int startFrame = 0;
 int frame;
 
@@ -40,14 +35,10 @@ void setup() {
   size(1000, 1000);
   
   frameRate(12);
-
-  gifExport = new GifMaker(this, "export.gif");
-  gifExport.setRepeat(0);        // make it an "endless" animation
-  //gifExport.setTransparent(0,0,0);  // black is transparent
   
   allBranches = loadBranches();
   
-  drawBranchesForFirstTime();
+  drawBGForFirstTime();
   
   frame = 0;
 }
@@ -58,11 +49,9 @@ void draw() {
   
   drawSignals();
   
-  gifExport.setDelay(1);
-  gifExport.addFrame();
+  saveFrame("frames"+File.separator+"####.png");
   
-  if (frame == numberOfFramesInGif - 1) {
-   gifExport.finish();
+  if (frame == numberOfFramesInVideo - 1) {
    exit();
   }
   
@@ -70,24 +59,16 @@ void draw() {
   
 }
 
-public void drawBranchesForFirstTime() {
+public void drawBGForFirstTime() {
   fill(#000000, 255);
   stroke(#000000, 255);
   rect(0,0,width,height);
-  drawBranches(BRANCH_ALPHA_BASE);
 }
 
 public void fadeSignals() {
   fill(#000000, FADE_ALPHA);
   stroke(#000000, 255);
   rect(0,0,width,height);
-  drawBranches(FADE_ALPHA);
-}
-
-public void drawBranches(int alpha) {
-  for (Branch branch : allBranches.values()) {
-    branch.drawBranch(alpha);
-  }
 }
 
 public HashMap<Integer, Branch> loadBranches() {
@@ -166,17 +147,12 @@ class Branch {
     this.scaledYEnd = scaleYValToFitImage(yEnd);
   }
   
-  public void drawBranch(int alpha) {
-    stroke(color(BRANCH_RED, BRANCH_GREEN, BRANCH_BLUE), alpha);
-    line(scaledXBeginning, scaledYBeginning, scaledXEnd, scaledYEnd);
-  }
-  
   public void drawSignal(float ratioDistanceAlongBranch, float amplitude) {
     
   float xSignal = ratioDistanceAlongBranch * (this.scaledXEnd - this.scaledXBeginning) + this.scaledXBeginning;
   float ySignal = ratioDistanceAlongBranch * (this.scaledYEnd - this.scaledYBeginning) + this.scaledYBeginning; 
     
-  strokeWeight(round(amplitude * SIGNAL_STROKE_WEIGHT_BASE));
+  strokeWeight(round(abs(amplitude) * SIGNAL_STROKE_WEIGHT_BASE));
   if (branchType.equals("dendrite") && amplitude >= 0) {
     stroke(color(SIGNAL_EXCITE_RED, SIGNAL_EXCITE_GREEN, SIGNAL_EXCITE_BLUE), max(round(abs(amplitude)*SIGNAL_OPACITY_BASE), 255));
   } else if (branchType.equals("dendrite") && amplitude < 0) {
