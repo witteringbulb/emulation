@@ -41,6 +41,13 @@ public class Axon extends Branch {
         this.axonTerminals = axonTerminals;
     }
 
+    public void addAxonTerminalConnectionToDendrite(Dendrite connectedDendrite, double initialSynapseWeight) {
+        if (this.axonTerminals == null) {
+            this.axonTerminals = new ArrayList<AxonTerminal>();
+        }
+        this.axonTerminals.add(new AxonTerminal(this.getCoordinatesOfBranchEnd(), connectedDendrite, this.getSignalType(), initialSynapseWeight));
+    }
+
     @Override
     public void propagateSignalsOneTimeIncrement() {
         this.timeStepsSinceFiring++;

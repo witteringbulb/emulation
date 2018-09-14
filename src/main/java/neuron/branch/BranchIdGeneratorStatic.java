@@ -8,4 +8,6 @@ public class BranchIdGeneratorStatic {
         return nextAvailableUniqueId++;
     }
 
+    public static void reset() {nextAvailableUniqueId = 0;}
+
 }

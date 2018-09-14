@@ -4,7 +4,7 @@ public class DefaultValues {
 
     //Signals
     public static final double DEFAULT_SIGNAL_AMPLITUDE = 0.4;
-    public static final double DEFAULT_SIGNAL_WIDTH = 0.1;
+    public static final double DEFAULT_SIGNAL_WIDTH = 0.2;
     public static final double DEFAULT_SIGNAL_SPEED = 0.05;
     public static final double DEFAULT_ZERO_SIGNAL_THRESH = 0.1;
 
@@ -15,7 +15,7 @@ public class DefaultValues {
 
     //Synapse
     public static final double DEFAULT_SYNAPSE_FIRE_THRESH = 0.1;
-    public static final int DEFAULT_SYNAPSE_FIRE_TIME_DELAY = 5;
+    public static final int DEFAULT_SYNAPSE_FIRE_TIME_DELAY = 10;
     public static final double DEFAULT_POSTSYNAPTIC_SIGNAL_AMPLITUDE_BASE = 0.4;
 
 }

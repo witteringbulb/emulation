@@ -2,6 +2,7 @@ import defaults.DefaultValues;
 import neuron.Neuron;
 import neuron.branch.Axon;
 import neuron.branch.AxonTerminal;
+import neuron.branch.BranchIdGeneratorStatic;
 import neuron.branch.Dendrite;
 import neuron.branchGeneration.BranchGenerator;
 import neuron.signal.SignalType;
@@ -27,6 +28,8 @@ class SingleNeuronForBlogPostTest {
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
+
+        BranchIdGeneratorStatic.reset();
 
         String saveDirectory =
                 "src" + File.separator + "test" + File.separator +

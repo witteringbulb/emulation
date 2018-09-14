@@ -82,4 +82,6 @@ public abstract class Branch {
 
     public List<Signal> getSignals() { return signals; }
 
+    public SignalType getSignalType() {return this.signalType;}
+
 }

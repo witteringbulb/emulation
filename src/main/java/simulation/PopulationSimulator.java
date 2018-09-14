@@ -35,7 +35,13 @@ public class PopulationSimulator {
         }
         if (populationFiringDataThisTimestep != null) {
             for (int branchUid : populationFiringDataThisTimestep.mapOfDendriteUidsToSignalAmplitudes.keySet()) {
-                getMapOfBranchUidToBranch().get(branchUid).fire(populationFiringDataThisTimestep.mapOfDendriteUidsToSignalAmplitudes.get(branchUid));
+                Branch branch = getMapOfBranchUidToBranch().get(branchUid);
+                if (branch == null) {
+                    System.out.println("null branch with UID "+branchUid);
+                }
+                double amp = populationFiringDataThisTimestep.mapOfDendriteUidsToSignalAmplitudes.get(branchUid);
+                branch.fire(amp);
+                //getMapOfBranchUidToBranch().get(branchUid).fire(populationFiringDataThisTimestep.mapOfDendriteUidsToSignalAmplitudes.get(branchUid));
             }
         }
     }
