@@ -42,7 +42,7 @@ public abstract class Branch {
     }
 
     public void propagateSignalsOneTimeIncrement() {
-        Iterator<Signal> signalsIterator = signals.iterator();
+        Iterator<Signal> signalsIterator = this.getSignals().iterator();
         while (signalsIterator.hasNext()) {
             Signal signal = signalsIterator.next();
             signal.propagateOneTimeIncrement();
