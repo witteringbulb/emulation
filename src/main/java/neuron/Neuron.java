@@ -10,15 +10,18 @@ import java.util.List;
 
 public class Neuron {
 
+    public boolean inhibitory = false;
+
     private final double AXON_FIRE_AMPLITUDE = DefaultValues.DEFAULT_SIGNAL_AMPLITUDE;
 
     private Soma soma;
     private Axon axon;
 
-    public Neuron(Soma soma, Axon axon) {
+    public Neuron(Soma soma, Axon axon, boolean inhibitory) {
         this.soma = soma;
         soma.setParentNeuron(this);
         this.axon = axon;
+        this.getAxon().setInhibitory(inhibitory);
     }
 
     public void fireAxon() {
@@ -40,13 +43,19 @@ public class Neuron {
     public List<Branch> getAllBranchesInSingleList() {
         List<Branch> allBranches = new ArrayList<Branch>();
         allBranches.add(this.getAxon());
-        for (Branch branch : this.getAxon().getAxonTerminals()) {
-            allBranches.add(branch);
+        if (this.getAxon().getAxonTerminals() != null) {
+            for (Branch branch : this.getAxon().getAxonTerminals()) {
+                allBranches.add(branch);
+            }
         }
         for (Branch branch : this.getSoma().getDendrites()) {
             allBranches.add(branch);
         }
         return allBranches;
+    }
+
+    public boolean isInhibitory() {
+        return this.inhibitory;
     }
 
 }

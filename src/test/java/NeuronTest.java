@@ -39,7 +39,7 @@ class NeuronTest {
         Axon axon = new Axon(soma.getSomaLocation(), new double[]{1.0, 4.5}, SignalType.SQUARE_SIGNAL_DEFAULT);
         axon.setAxonTerminals(axonTerminals);
 
-        neuron = new Neuron(soma, axon);
+        neuron = new Neuron(soma, axon, false);
 
     }
 

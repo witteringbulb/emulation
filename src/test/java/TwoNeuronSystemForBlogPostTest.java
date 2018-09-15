@@ -46,8 +46,8 @@ class TwoNeuronSystemForBlogPostTest {
         Soma soma2 = new HeavisideSoma(new double[]{1.0, 3.0}, 0.7);
         Axon axon2 = new Axon(soma2.getSomaLocation(), new double[]{1.0, 0.0}, SignalType.SQUARE_SIGNAL_DEFAULT);
 
-        neuron1 = new Neuron(soma1, axon1);
-        neuron2 = new Neuron(soma2, axon2);
+        neuron1 = new Neuron(soma1, axon1, false);
+        neuron2 = new Neuron(soma2, axon2, false);
 
         neuron1.getSoma().setDendrites(
                 new BranchGenerator(neuron1.getSoma().getSomaLocation(), Dendrite.class, signalType)

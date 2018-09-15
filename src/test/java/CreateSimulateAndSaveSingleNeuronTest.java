@@ -35,7 +35,7 @@ class CreateSimulateAndSaveSingleNeuronTest {
         Soma soma = new HeavisideSoma(new double[]{0.0, 0.0}, 0.5);
         Axon axon = new Axon(soma.getSomaLocation(), new double[]{0.0, 4.0}, SignalType.SQUARE_SIGNAL_DEFAULT);
 
-        neuron = new Neuron(soma, axon);
+        neuron = new Neuron(soma, axon, false);
 
         neuron.getSoma().setDendrites(
                 new BranchGenerator(neuron.getSoma().getSomaLocation(), Dendrite.class, signalType)

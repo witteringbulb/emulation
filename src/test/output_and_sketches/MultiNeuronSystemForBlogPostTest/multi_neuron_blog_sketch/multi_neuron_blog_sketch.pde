@@ -20,7 +20,7 @@ final int SIGNAL_AXON_RED = 234;
 final int SIGNAL_AXON_GREEN = 234;
 final int SIGNAL_AXON_BLUE = 234;
 
-int numberOfFramesInVideo = 400;
+int numberOfFramesInVideo = 100;
 int startFrame = 0;
 int frame;
 

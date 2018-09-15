@@ -13,6 +13,8 @@ public class Axon extends Branch {
 
     private List<AxonTerminal> axonTerminals;
 
+    private boolean inhibitory = false;
+
     private int timeStepsSinceFiring;
 
     public Axon(double[] coordinatesOfBranchBeginning,
@@ -35,17 +37,12 @@ public class Axon extends Branch {
         this.timeStepsSinceFiring = 0;
     }
 
-    public void buildAxonTerminalsAndConnectThemToNearbyDendrites(int numberToBuild) {
-        List<AxonTerminal> axonTerminals = new ArrayList<AxonTerminal>();
-        //TODO: Implement
-        this.axonTerminals = axonTerminals;
-    }
-
     public void addAxonTerminalConnectionToDendrite(Dendrite connectedDendrite, double initialSynapseWeight) {
         if (this.axonTerminals == null) {
             this.axonTerminals = new ArrayList<AxonTerminal>();
         }
-        this.axonTerminals.add(new AxonTerminal(this.getCoordinatesOfBranchEnd(), connectedDendrite, this.getSignalType(), initialSynapseWeight));
+        this.axonTerminals.add(new AxonTerminal(this.getCoordinatesOfBranchEnd(), connectedDendrite, this.getSignalType(),
+                isInhibitory()*initialSynapseWeight));
     }
 
     @Override
@@ -56,10 +53,12 @@ public class Axon extends Branch {
 
     public void propagateAxonAndAxonTerminalSignalsForwardOneTimeIncrement() {
         this.propagateSignalsOneTimeIncrement();
-        this.axonTerminals.forEach(axonTerminal -> axonTerminal.propagateSignalsOneTimeIncrement());
+        if (this.axonTerminals != null) {
+            this.axonTerminals.forEach(axonTerminal -> axonTerminal.propagateSignalsOneTimeIncrement());
 
-        if (this.getSignalMagnitudeAtEndOfBranch() > AXON_TERMINAL_FIRE_THRESH) {
-            this.axonTerminals.forEach(axonTerminal -> axonTerminal.fire(AXON_TERMINAL_FIRING_AMP));
+            if (this.getSignalMagnitudeAtEndOfBranch() > AXON_TERMINAL_FIRE_THRESH) {
+                this.axonTerminals.forEach(axonTerminal -> axonTerminal.fire(AXON_TERMINAL_FIRING_AMP));
+            }
         }
     }
 
@@ -72,5 +71,14 @@ public class Axon extends Branch {
     public String getBranchType() {return "axon";}
 
     public int getTimeStepsSinceFiring() { return timeStepsSinceFiring;}
+
+    private int isInhibitory() {
+        if (inhibitory) {return -1;}
+        return 1;
+    }
+
+    public void setInhibitory(boolean inhibitory) {
+        this.inhibitory = inhibitory;
+    }
 
 }
