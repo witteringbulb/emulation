@@ -5,7 +5,6 @@ final String dataDirectory = dataPath("");
 final int IMAGE_BORDER = 100;
 
 final float SIGNAL_OPACITY_BASE = 1;
-final float SIGNAL_STROKE_WEIGHT_BASE = 10;
 final int FADE_ALPHA = 20;
 
 final int SIGNAL_EXCITE_RED = 46;
@@ -20,7 +19,7 @@ final int SIGNAL_AXON_RED = 234;
 final int SIGNAL_AXON_GREEN = 234;
 final int SIGNAL_AXON_BLUE = 234;
 
-int numberOfFramesInVideo = 100;
+int numberOfFramesInVideo = 400;
 int startFrame = 0;
 int frame;
 
@@ -100,6 +99,7 @@ public float[] getMinMaxXY() {
       if (row.getFloat("y2") > ymax) {ymax = row.getFloat("y2");}
     }
     this.minMaxXY = new float[]{xmin, ymin, xmax, ymax};
+    
   }
   return this.minMaxXY;
 }
@@ -153,8 +153,11 @@ class Branch {
   
   float xSignal = ratioDistanceAlongBranch * (this.scaledXEnd - this.scaledXBeginning) + this.scaledXBeginning;
   float ySignal = ratioDistanceAlongBranch * (this.scaledYEnd - this.scaledYBeginning) + this.scaledYBeginning; 
+  
+  float xSignal_interp = (ratioDistanceAlongBranch+0.02) * (this.scaledXEnd - this.scaledXBeginning) + this.scaledXBeginning;
+  float ySignal_interp = (ratioDistanceAlongBranch+0.02) * (this.scaledYEnd - this.scaledYBeginning) + this.scaledYBeginning;
     
-  strokeWeight(round(abs(amplitude) * SIGNAL_STROKE_WEIGHT_BASE));
+  strokeWeight(1);
   if (branchType.equals("dendrite") && amplitude >= 0) {
     stroke(color(SIGNAL_EXCITE_RED, SIGNAL_EXCITE_GREEN, SIGNAL_EXCITE_BLUE), max(round(abs(amplitude)*SIGNAL_OPACITY_BASE), 255));
   } else if (branchType.equals("dendrite") && amplitude < 0) {
@@ -164,6 +167,7 @@ class Branch {
   }
 
   point(xSignal, ySignal);
+  point(xSignal_interp, ySignal_interp);
   }
   
 }
