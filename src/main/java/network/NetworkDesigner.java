@@ -34,7 +34,7 @@ public class NetworkDesigner {
     //These ones we just take as defaults for now
     private SignalType signalType = DefaultValues.DEFAULT_SIGNAL_TYPE;
     private double somaFiringThreshold = DefaultValues.DEFAULT_SOMA_FIRE_THRESH;
-    private double axonTerminalSynapseWeight = DefaultValues.DEFAULT_POSTSYNAPTIC_SIGNAL_AMPLITUDE_BASE;
+    private double axonTerminalSynapseWeight = DefaultValues.DEFAULT_SYNAPSE_WEIGHT;
 
     public NetworkDesigner(int numberOfNeurons, double[] averageLocationOfSoma, double maxSomaDistanceFromAvg, double averageAxonLength,
                            double wifthOfAxonLengthDistribution, double maxLengthOfAxonTerminals, double averageNumberOfAxonTerminals,
@@ -56,7 +56,7 @@ public class NetworkDesigner {
         this.ratioExcitatoryToInhibitoryNeurons = ratioExcitatoryToInhibitoryNeurons;
     }
 
-    public List<Neuron> designNewNetwork() {
+    public List<Neuron> designNewDisconnectedNetwork() {
         List<Neuron> network = new ArrayList<Neuron>();
 
 
@@ -79,13 +79,11 @@ public class NetworkDesigner {
             neuron.getSoma().setDendrites(dendritesToAdd);
         }
 
-        createAndConnectAxonTerminalsForNetwork(network);
-
         return network;
 
     }
 
-    private void createAndConnectAxonTerminalsForNetwork(List<Neuron> network) {
+    public void createAndConnectAxonTerminalsForNetwork(List<Neuron> network) {
         List<Integer> indices = prepareNeuronIndices(network);
         List<Dendrite> unconnectedDendrites = network.stream().flatMap(n -> n.getSoma().getDendrites().stream()).collect(Collectors.toList());
         for (int i : indices) {

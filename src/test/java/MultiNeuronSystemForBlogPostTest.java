@@ -2,23 +2,13 @@ import defaults.DefaultValues;
 import network.NetworkDesigner;
 import network.builders.NetworkDesignerBuilder;
 import neuron.Neuron;
-import neuron.branch.Axon;
 import neuron.branch.BranchIdGeneratorStatic;
-import neuron.branch.Dendrite;
-import neuron.branchGeneration.BranchGenerator;
-import neuron.signal.SignalType;
-import neuron.soma.HeavisideSoma;
-import neuron.soma.Soma;
 import org.junit.jupiter.api.Test;
 import output.NetworkSaver;
 import output.SignalSaver;
 import simulation.PopulationSimulator;
-import simulation.firing.PopulationFiringData;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 class MultiNeuronSystemForBlogPostTest {
@@ -37,21 +27,22 @@ class MultiNeuronSystemForBlogPostTest {
                         "output_and_sketches" + File.separator + "MultiNeuronSystemForBlogPostTest" + File.separator +
                 "multi_neuron_blog_sketch" + File.separator + "data" + File.separator;
 
-        NetworkDesigner networkDesigner = new NetworkDesignerBuilder().setNumberOfNeurons(20).createNetworkDesigner();
+        NetworkDesigner networkDesigner = new NetworkDesignerBuilder().setNumberOfNeurons(50).createNetworkDesigner();
 
-        neuronPop = networkDesigner.designNewNetwork();
+        neuronPop = networkDesigner.designNewDisconnectedNetwork();
+        networkDesigner.createAndConnectAxonTerminalsForNetwork(neuronPop);
 
         networkSaver = new NetworkSaver(neuronPop, saveDirectory);
         signalSaver = new SignalSaver(neuronPop, saveDirectory);
     }
 
     @Test
-    public void testSimulateAndSaveTwoNeuronSystem() {
+    public void testSimulateAndSaveMultiNeuronSystem() {
 
         networkSaver.saveNeuronConfiguration();
 
         PopulationSimulator simulator = new PopulationSimulator(neuronPop, signalSaver);
 
-        simulator.simulateWithAllDendritesFiringRandomly(400, 0.01, DefaultValues.DEFAULT_SIGNAL_AMPLITUDE);
+        simulator.simulateWithAllDendritesFiringRandomly(400, 0.001, DefaultValues.DEFAULT_SIGNAL_AMPLITUDE);
     }
 }
