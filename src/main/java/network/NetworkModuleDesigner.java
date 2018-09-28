@@ -18,19 +18,11 @@ public class NetworkModuleDesigner {
     private double maxSomaDistanceFromAvg;
     private double averageAxonLength = NetworkDesignerStatic.getAverageAxonLengthWithinModule();
     private double widthOfAxonLengthsDistribution = NetworkDesignerStatic.getWidthOfAxonLengthsDistributionWithinModule();
-    private double maxLengthOfAxonTerminals = NetworkDesignerStatic.getMaxLengthOfAxonTerminals();
-    private double averageNumberOfAxonTerminals = NetworkDesignerStatic.getAverageNumberOfAxonTerminals();
-    private double widthOfAxonTerminalNumberDistribution = NetworkDesignerStatic.getWidthOfAxonTerminalNumberDistribution();
-    private double averageNumberOfDendrites = NetworkDesignerStatic.getAverageNumberOfDendrites();
-    private double widthOfDendriteNumberDistribution = NetworkDesignerStatic.getWidthOfDendriteNumberDistribution();
-    private double averageLengthOfDendrites = NetworkDesignerStatic.getAverageLengthOfDendrites();
-    private double widthOfDendriteLengthsDistribution = NetworkDesignerStatic.getWidthOfDendriteLengthsDistribution();
     private double ratioExcitatoryToInhibitoryNeurons = NetworkDesignerStatic.getRatioExcitatoryToInhibitoryNeurons();
 
     //These ones we just take as defaults for now
     private SignalType signalType = DefaultValues.DEFAULT_SIGNAL_TYPE;
     private double somaFiringThreshold = DefaultValues.DEFAULT_SOMA_FIRE_THRESH;
-    private double axonTerminalSynapseWeight = DefaultValues.DEFAULT_SYNAPSE_WEIGHT;
 
     public NetworkModuleDesigner(int numberOfNeurons, double[] averageLocationOfSoma, double maxSomaDistanceFromAvg) {
         this.numberOfNeurons = numberOfNeurons;
@@ -48,8 +40,17 @@ public class NetworkModuleDesigner {
             double[] somaCoordinates = new double[]{averageLocationOfSoma[0] + radius * Math.cos(angle), averageLocationOfSoma[1] + radius * Math.sin(angle)};
             Soma soma = new HeavisideSoma(somaCoordinates, somaFiringThreshold);
 
-            double axonAngle = 2 * Math.PI * Math.random();
             double axonLength = averageAxonLength + (Math.random() - 0.5)*widthOfAxonLengthsDistribution;
+            //Make sure axon ends inside circle
+            if (axonLength > 0.5*maxSomaDistanceFromAvg) {
+                throw new IllegalArgumentException("max soma distance too small, or axon too long");
+            }
+            double axonAngle = Math.random()*2*Math.PI;
+            while (Math.sqrt( Math.pow(somaCoordinates[0] + axonLength * Math.cos(axonAngle) - averageLocationOfSoma[0],2)
+                    +  Math.pow(somaCoordinates[1] + axonLength * Math.sin(axonAngle) - averageLocationOfSoma[1],2))
+                    > maxSomaDistanceFromAvg) {
+                axonAngle = Math.random()*2*Math.PI;
+            }
             double[] axonEndCoordinates = new double[]{somaCoordinates[0] + axonLength * Math.cos(axonAngle), somaCoordinates[1] + axonLength * Math.sin(axonAngle)};
             Axon axon = new Axon(somaCoordinates, axonEndCoordinates, signalType);
 
