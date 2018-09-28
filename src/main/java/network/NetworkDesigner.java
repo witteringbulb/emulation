@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class NetworkDesigner {
 
     private int numberOfNeurons;
-    private double[] averageLocationOfSoma; //TODO: Check length 2
+    private double[] averageLocationOfSoma;
     private double maxSomaDistanceFromAvg;
     private double averageAxonLength;
     private double widthOfAxonLengthsDistribution;
@@ -29,7 +29,7 @@ public class NetworkDesigner {
     private double widthOfDendriteNumberDistribution;
     private double averageLengthOfDendrites;
     private double widthOfDendriteLengthsDistribution;
-    private double ratioExcitatoryToInhibitoryNeurons; //TODO: Check 0 <= r <= 1
+    private double ratioExcitatoryToInhibitoryNeurons;
 
     //These ones we just take as defaults for now
     private SignalType signalType = DefaultValues.DEFAULT_SIGNAL_TYPE;

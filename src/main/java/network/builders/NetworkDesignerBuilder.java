@@ -23,6 +23,9 @@ public class NetworkDesignerBuilder {
     }
 
     public NetworkDesignerBuilder setAverageLocationOfSoma(double[] averageLocationOfSoma) {
+        if (averageLocationOfSoma.length != 2) {
+            throw new IllegalArgumentException("Soma location avg must be of length 2");
+        }
         this.averageLocationOfSoma = averageLocationOfSoma;
         return this;
     }
@@ -78,6 +81,9 @@ public class NetworkDesignerBuilder {
     }
 
     public NetworkDesignerBuilder setRatioExcitatoryToInhibitoryNeurons(double ratioExcitatoryToInhibitoryNeurons) {
+        if (ratioExcitatoryToInhibitoryNeurons < 0 || ratioExcitatoryToInhibitoryNeurons > 1) {
+            throw new IllegalArgumentException("ratio of excitatory to inhibitory must lie between 0 and 1");
+        }
         this.ratioExcitatoryToInhibitoryNeurons = ratioExcitatoryToInhibitoryNeurons;
         return this;
     }
