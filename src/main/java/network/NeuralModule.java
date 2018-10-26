@@ -1,6 +1,6 @@
 package network;
 
-import neuron.Neuron;
+import neuron.InternalNeuron;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +27,7 @@ public class NeuralModule {
         this.connectedModules.put(module, numberOfInterModuleNeurons);
     }
 
-    public List<Neuron> designDisconnectedModuleInternalNetwork(){
+    public List<InternalNeuron> designDisconnectedModuleInternalNetwork(){
         return this.networkModuleDesigner.designNewDisconnectedNetwork();
     }
 

@@ -1,6 +1,6 @@
 package simulation;
 
-import neuron.Neuron;
+import neuron.InternalNeuron;
 import neuron.branch.Branch;
 import neuron.branch.Dendrite;
 import output.SignalSaver;
@@ -11,12 +11,12 @@ import java.util.List;
 
 public class PopulationSimulator {
 
-    private final List<Neuron> neuronPopulation;
+    private final List<InternalNeuron> neuronPopulation;
     private final SignalSaver signalSaver;
 
     private HashMap<Integer, Branch> mapOfBranchUidToBranch;
 
-    public PopulationSimulator(List<Neuron> neuronPopulation, SignalSaver signalSaver) {
+    public PopulationSimulator(List<InternalNeuron> neuronPopulation, SignalSaver signalSaver) {
         this.neuronPopulation = neuronPopulation;
         this.signalSaver = signalSaver;
     }
@@ -30,7 +30,7 @@ public class PopulationSimulator {
     }
 
     private void simulateForOneTimeIncrementWithPredeterminedFirings(PopulationFiringData populationFiringDataThisTimestep) {
-        for (Neuron neuron : neuronPopulation) {
+        for (InternalNeuron neuron : neuronPopulation) {
             neuron.propagateSignalsOneTimeIncrement();
         }
         if (populationFiringDataThisTimestep != null) {
@@ -54,7 +54,7 @@ public class PopulationSimulator {
     }
 
     private void simulateForOneTimeIncrementWithAllDendritesFiringRandomly(double firingProbabilityPerDendritePerTimeIncrement, double dendriteFiringAmplitude) {
-        for (Neuron neuron : neuronPopulation) {
+        for (InternalNeuron neuron : neuronPopulation) {
             neuron.propagateSignalsOneTimeIncrement();
             for (Dendrite dendrite : neuron.getSoma().getDendrites()) {
                 if (Math.random() < firingProbabilityPerDendritePerTimeIncrement) {
@@ -67,7 +67,7 @@ public class PopulationSimulator {
     public HashMap<Integer, Branch> getMapOfBranchUidToBranch() {
         if (mapOfBranchUidToBranch == null) {
             mapOfBranchUidToBranch = new HashMap<Integer, Branch>();
-            for (Neuron neuron : neuronPopulation) {
+            for (InternalNeuron neuron : neuronPopulation) {
                 for (Branch branch : neuron.getAllBranchesInSingleList()) {
                     mapOfBranchUidToBranch.put(branch.getBranchUniqueId(), branch);
                 }

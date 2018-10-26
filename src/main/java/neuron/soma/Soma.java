@@ -1,8 +1,7 @@
 package neuron.soma;
 
 import defaults.DefaultValues;
-import javafx.util.Pair;
-import neuron.Neuron;
+import neuron.InternalNeuron;
 import neuron.branch.Dendrite;
 
 import java.util.List;
@@ -12,8 +11,8 @@ public abstract class Soma {
     private double IMMEDIATE_POST_FIRE_PEN_ABS = DefaultValues.IMMEDIATE_POST_FIRE_PEN_ABS;
     private double POST_FIRE_PENALTY_DECAY_ABS = DefaultValues.POST_FIRE_PENALTY_DECAY_ABS;
 
-    private Neuron parentNeuron;
-    public void setParentNeuron(Neuron neuron) {
+    private InternalNeuron parentNeuron;
+    public void setParentNeuron(InternalNeuron neuron) {
         this.parentNeuron = neuron;
     }
 

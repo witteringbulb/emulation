@@ -1,5 +1,6 @@
 package network;
 
+import neuron.InternalNeuron;
 import neuron.Neuron;
 import neuron.branch.Axon;
 import neuron.branch.Dendrite;
@@ -13,7 +14,8 @@ import java.util.List;
 public class BrainDesigner {
 
     private HashMap<String, NeuralModule> neuralModules;
-    private List<Neuron> neuronPopulation;
+    private List<Neuron> internalNeuronPopulation;
+    private List<Neuron> inputNeurons;
 
     public BrainDesigner() {
         this.neuralModules = new HashMap<String, NeuralModule>();
@@ -40,23 +42,27 @@ public class BrainDesigner {
     public Brain createBrainNetwork() {
        this.createDisconnectedBrainNetwork();
        this.createAndConnectAxonTerminalsForBrainNetwork();
-       return new Brain(this.neuronPopulation);
+       return new Brain(this.internalNeuronPopulation, this.inputNeurons);
+    }
+
+    public void createUnconnectedInputNeurons(NeuralModule moduleToConnect, int numberOfInputNeurons) {
+
     }
 
     public void createDisconnectedBrainNetwork() {
-        this.neuronPopulation = new ArrayList<Neuron>();
+        this.internalNeuronPopulation = new ArrayList<Neuron>();
         //For each module, we create the internal network and create neurons with axons reaching out to the locations of other modules
         for (NeuralModule neuralModule : this.neuralModules.values()) {
-            List<Neuron> moduleInternalNetwork = neuralModule.designDisconnectedModuleInternalNetwork();
-            List<Neuron> connectionsToExternalModules = createInterModuleConnections(neuralModule);
+            List<InternalNeuron> moduleInternalNetwork = neuralModule.designDisconnectedModuleInternalNetwork();
+            List<InternalNeuron> connectionsToExternalModules = createInterModuleConnections(neuralModule);
 
-            this.neuronPopulation.addAll(moduleInternalNetwork);
-            this.neuronPopulation.addAll(connectionsToExternalModules);
+            this.internalNeuronPopulation.addAll(moduleInternalNetwork);
+            this.internalNeuronPopulation.addAll(connectionsToExternalModules);
         }
     }
 
-    public List<Neuron> createInterModuleConnections(NeuralModule neuralModule) {
-        List<Neuron> interModuleConnections = new ArrayList<Neuron>();
+    public List<InternalNeuron> createInterModuleConnections(NeuralModule neuralModule) {
+        List<InternalNeuron> interModuleConnections = new ArrayList<InternalNeuron>();
         HashMap<NeuralModule, Integer> connectedModules = neuralModule.getMapOfConnectedModulesToNumberOfConnections();
         for (NeuralModule moduleToConnectWith : connectedModules.keySet()) {
             interModuleConnections.addAll(createNeuronsBetweenModules(neuralModule, moduleToConnectWith, connectedModules.get(neuralModule)));
@@ -64,8 +70,8 @@ public class BrainDesigner {
         return interModuleConnections;
     }
 
-    private List<Neuron> createNeuronsBetweenModules(NeuralModule neuralModule, NeuralModule moduleToConnectWith, int numberOfNeurons) {
-        List<Neuron> neuronConnectionsBetweenModules = new ArrayList<Neuron>();
+    private List<InternalNeuron> createNeuronsBetweenModules(NeuralModule neuralModule, NeuralModule moduleToConnectWith, int numberOfNeurons) {
+        List<InternalNeuron> neuronConnectionsBetweenModules = new ArrayList<InternalNeuron>();
         for (int i = 0; i < numberOfNeurons; i++) {
             double[] somaCoordinates = chooseRandomPointInCircle(neuralModule.getCentre(), neuralModule.getRadius());
             Soma soma = new HeavisideSoma(somaCoordinates, NetworkDesignerStatic.getSomaFiringThreshold());
@@ -74,9 +80,9 @@ public class BrainDesigner {
             Axon axon = new Axon(somaCoordinates, coordinatesOfAxonEnd, NetworkDesignerStatic.getSignalType());
 
             neuronConnectionsBetweenModules.add(
-                    new Neuron(soma, axon, Math.random() > NetworkDesignerStatic.getRatioExcitatoryToInhibitoryNeurons()));
+                    new InternalNeuron(soma, axon, Math.random() > NetworkDesignerStatic.getRatioExcitatoryToInhibitoryNeurons()));
         }
-        for (Neuron neuron : neuronConnectionsBetweenModules) {
+        for (InternalNeuron neuron : neuronConnectionsBetweenModules) {
             List<Dendrite> dendritesToAdd = NetworkDesignerStatic.makeRandomizedDendrites(neuron.getSoma());
             neuron.getSoma().setDendrites(dendritesToAdd);
         }
@@ -90,7 +96,7 @@ public class BrainDesigner {
     }
 
     public void createAndConnectAxonTerminalsForBrainNetwork() {
-        NetworkDesignerStatic.createAndConnectAxonTerminalsForNetwork(this.neuronPopulation);
+        NetworkDesignerStatic.createAndConnectAxonTerminalsForNetwork(this.internalNeuronPopulation);
     }
 
 

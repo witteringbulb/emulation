@@ -1,7 +1,7 @@
 import defaults.DefaultValues;
 import network.NetworkDesignerStatic;
 import network.NetworkModuleDesigner;
-import neuron.Neuron;
+import neuron.InternalNeuron;
 import neuron.branch.BranchIdGeneratorStatic;
 import org.junit.jupiter.api.Test;
 import output.NetworkSaver;
@@ -13,7 +13,7 @@ import java.util.List;
 
 class MultiNeuronSystemForBlogPostTest {
 
-    private List<Neuron> neuronPop;
+    private List<InternalNeuron> neuronPop;
     private SignalSaver signalSaver;
     private NetworkSaver networkSaver;
 

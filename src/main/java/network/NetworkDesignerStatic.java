@@ -1,6 +1,7 @@
 package network;
 
 import defaults.DefaultValues;
+import neuron.InternalNeuron;
 import neuron.Neuron;
 import neuron.branch.Dendrite;
 import neuron.builders.DendriteBuilder;
@@ -70,12 +71,12 @@ public class NetworkDesignerStatic {
         return (Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2)) < maxLengthOfAxonTerminals);
     }
 
-    private static List<Integer> prepareNeuronIndices(List<Neuron> network) {
+    private static List<Integer> prepareNeuronIndices(List<InternalNeuron> network) {
         List<Integer> neuronIndices = new ArrayList<Integer>();
         long maxNumberOfAxonTerminals = Math.round(averageNumberOfAxonTerminals + 0.5 * widthOfAxonTerminalNumberDistribution);
         long minNumberOfAxonTerminals = Math.round(averageNumberOfAxonTerminals - 0.5 * widthOfAxonTerminalNumberDistribution);
         int neuronIndex = 0;
-        for (Neuron neuron : network) {
+        for (InternalNeuron neuron : network) {
             //Roll a 0, should get minimum number of axon terminals. Roll 0.5, should get avg. Roll 1, max
             long numberOfAxonTerminals = Math.round(minNumberOfAxonTerminals + Math.random() * (maxNumberOfAxonTerminals - minNumberOfAxonTerminals));
             for (int i = 0; i < numberOfAxonTerminals; i++) {

@@ -1,22 +1,20 @@
 package output;
 
-import neuron.Neuron;
-import neuron.branch.Branch;
+import neuron.InternalNeuron;
 import neuron.signal.Signal;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class SignalSaver {
 
-    private List<Neuron> neurons;
+    private List<InternalNeuron> neurons;
     private String pathToSaveDirectory;
     private int timeStep;
 
-    public SignalSaver(List<Neuron> neurons, String pathToSaveDirectory) {
+    public SignalSaver(List<InternalNeuron> neurons, String pathToSaveDirectory) {
         this.neurons = neurons;
         this.pathToSaveDirectory = pathToSaveDirectory;
         this.timeStep = 0;

@@ -1,5 +1,5 @@
 import defaults.DefaultValues;
-import neuron.Neuron;
+import neuron.InternalNeuron;
 import neuron.branch.Axon;
 import neuron.branch.AxonTerminal;
 import neuron.branch.BranchIdGeneratorStatic;
@@ -21,8 +21,8 @@ import java.util.List;
 
 class SingleNeuronForBlogPostTest {
 
-    private Neuron neuron;
-    private List<Neuron> neuronPop;
+    private InternalNeuron neuron;
+    private List<InternalNeuron> neuronPop;
     private SignalSaver signalSaver;
     private NetworkSaver networkSaver;
 
@@ -41,7 +41,7 @@ class SingleNeuronForBlogPostTest {
         Soma soma = new HeavisideSoma(new double[]{0.0, 0.0}, 0.5);
         Axon axon = new Axon(soma.getSomaLocation(), new double[]{0.0, 3.0}, SignalType.SQUARE_SIGNAL_DEFAULT);
 
-        neuron = new Neuron(soma, axon, false);
+        neuron = new InternalNeuron(soma, axon, false);
 
         neuron.getSoma().setDendrites(
                 new BranchGenerator(neuron.getSoma().getSomaLocation(), Dendrite.class, signalType)
@@ -51,7 +51,7 @@ class SingleNeuronForBlogPostTest {
                 new BranchGenerator(neuron.getAxon().getCoordinatesOfBranchEnd(), AxonTerminal.class, signalType)
                         .createEvenlySpacedBranchesOfEqualLength(1.0, 4));
 
-        neuronPop = new ArrayList<Neuron>();
+        neuronPop = new ArrayList<InternalNeuron>();
         neuronPop.add(neuron);
         networkSaver = new NetworkSaver(neuronPop, saveDirectory);
         signalSaver = new SignalSaver(neuronPop, saveDirectory);

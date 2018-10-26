@@ -1,7 +1,7 @@
 package network;
 
 import defaults.DefaultValues;
-import neuron.Neuron;
+import neuron.InternalNeuron;
 import neuron.branch.Axon;
 import neuron.branch.Dendrite;
 import neuron.signal.SignalType;
@@ -30,8 +30,8 @@ public class NetworkModuleDesigner {
         this.maxSomaDistanceFromAvg = maxSomaDistanceFromAvg;
     }
 
-    public List<Neuron> designNewDisconnectedNetwork() {
-        List<Neuron> network = new ArrayList<Neuron>();
+    public List<InternalNeuron> designNewDisconnectedNetwork() {
+        List<InternalNeuron> network = new ArrayList<InternalNeuron>();
 
 
         for (int i = 0; i < numberOfNeurons; i++) {
@@ -42,7 +42,7 @@ public class NetworkModuleDesigner {
 
             double axonLength = averageAxonLength + (Math.random() - 0.5)*widthOfAxonLengthsDistribution;
             //Make sure axon ends inside circle
-            if (axonLength > 0.5*maxSomaDistanceFromAvg) {
+            if (axonLength > 0.7*maxSomaDistanceFromAvg) {
                 throw new IllegalArgumentException("max soma distance too small, or axon too long");
             }
             double axonAngle = Math.random()*2*Math.PI;
@@ -54,10 +54,10 @@ public class NetworkModuleDesigner {
             double[] axonEndCoordinates = new double[]{somaCoordinates[0] + axonLength * Math.cos(axonAngle), somaCoordinates[1] + axonLength * Math.sin(axonAngle)};
             Axon axon = new Axon(somaCoordinates, axonEndCoordinates, signalType);
 
-            network.add(new Neuron(soma, axon, Math.random() > ratioExcitatoryToInhibitoryNeurons));
+            network.add(new InternalNeuron(soma, axon, Math.random() > ratioExcitatoryToInhibitoryNeurons));
         }
 
-        for (Neuron neuron : network) {
+        for (InternalNeuron neuron : network) {
             List<Dendrite> dendritesToAdd = NetworkDesignerStatic.makeRandomizedDendrites(neuron.getSoma());
             neuron.getSoma().setDendrites(dendritesToAdd);
         }
