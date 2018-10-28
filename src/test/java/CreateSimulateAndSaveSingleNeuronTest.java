@@ -1,4 +1,4 @@
-import neuron.InternalNeuron;
+import neuron.Neuron;
 import neuron.branch.Axon;
 import neuron.branch.AxonTerminal;
 import neuron.branch.Dendrite;
@@ -17,8 +17,8 @@ import java.util.List;
 
 class CreateSimulateAndSaveSingleNeuronTest {
 
-    private InternalNeuron neuron;
-    private List<InternalNeuron> neuronPop;
+    private Neuron neuron;
+    private List<Neuron> neuronPop;
     private SignalSaver signalSaver;
     private NetworkSaver networkSaver;
 
@@ -35,7 +35,7 @@ class CreateSimulateAndSaveSingleNeuronTest {
         Soma soma = new HeavisideSoma(new double[]{0.0, 0.0}, 0.5);
         Axon axon = new Axon(soma.getSomaLocation(), new double[]{0.0, 4.0}, SignalType.SQUARE_SIGNAL_DEFAULT);
 
-        neuron = new InternalNeuron(soma, axon, false);
+        neuron = new Neuron(soma, axon, false);
 
         neuron.getSoma().setDendrites(
                 new BranchGenerator(neuron.getSoma().getSomaLocation(), Dendrite.class, signalType)
@@ -45,7 +45,7 @@ class CreateSimulateAndSaveSingleNeuronTest {
                 new BranchGenerator(neuron.getAxon().getCoordinatesOfBranchEnd(), AxonTerminal.class, signalType)
                         .createEvenlySpacedBranchesOfEqualLength(1.0, 4));
 
-        neuronPop = new ArrayList<InternalNeuron>();
+        neuronPop = new ArrayList<Neuron>();
         neuronPop.add(neuron);
         networkSaver = new NetworkSaver(neuronPop, saveDirectory);
         signalSaver = new SignalSaver(neuronPop, saveDirectory);

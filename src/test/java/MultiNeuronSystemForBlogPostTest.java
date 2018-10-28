@@ -1,7 +1,7 @@
 import defaults.DefaultValues;
 import network.NetworkDesignerStatic;
 import network.NetworkModuleDesigner;
-import neuron.InternalNeuron;
+import neuron.Neuron;
 import neuron.branch.BranchIdGeneratorStatic;
 import org.junit.jupiter.api.Test;
 import output.NetworkSaver;
@@ -13,7 +13,7 @@ import java.util.List;
 
 class MultiNeuronSystemForBlogPostTest {
 
-    private List<InternalNeuron> neuronPop;
+    private List<Neuron> neuronPop;
     private SignalSaver signalSaver;
     private NetworkSaver networkSaver;
 
@@ -27,7 +27,7 @@ class MultiNeuronSystemForBlogPostTest {
                         "output_and_sketches" + File.separator + "MultiNeuronSystemForBlogPostTest" + File.separator +
                 "multi_neuron_blog_sketch" + File.separator + "data" + File.separator;
 
-        NetworkModuleDesigner networkModuleDesigner = new NetworkModuleDesigner(50, new double[]{0,0}, 5.0);
+        NetworkModuleDesigner networkModuleDesigner = new NetworkModuleDesigner(50, new double[]{0,0}, 8.0);
 
         neuronPop = networkModuleDesigner.designNewDisconnectedNetwork();
         NetworkDesignerStatic.createAndConnectAxonTerminalsForNetwork(neuronPop);

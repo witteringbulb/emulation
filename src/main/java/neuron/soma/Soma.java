@@ -1,7 +1,7 @@
 package neuron.soma;
 
 import defaults.DefaultValues;
-import neuron.InternalNeuron;
+import neuron.Neuron;
 import neuron.branch.Dendrite;
 
 import java.util.List;
@@ -11,8 +11,8 @@ public abstract class Soma {
     private double IMMEDIATE_POST_FIRE_PEN_ABS = DefaultValues.IMMEDIATE_POST_FIRE_PEN_ABS;
     private double POST_FIRE_PENALTY_DECAY_ABS = DefaultValues.POST_FIRE_PENALTY_DECAY_ABS;
 
-    private InternalNeuron parentNeuron;
-    public void setParentNeuron(InternalNeuron neuron) {
+    private Neuron parentNeuron;
+    public void setParentNeuron(Neuron neuron) {
         this.parentNeuron = neuron;
     }
 
@@ -47,9 +47,9 @@ public abstract class Soma {
     }
 
     public double sumSignalsFromEndsOfDendritesForThisTimeIncrement() {
-        return this.getDendrites().stream()
-                .mapToDouble(dendrite -> dendrite.getSignalMagnitudeAtEndOfBranch())
-                .sum();
+            return this.getDendrites().stream()
+                    .mapToDouble(dendrite -> dendrite.getSignalMagnitudeAtEndOfBranch())
+                    .sum();
     }
 
     public List<Dendrite> getDendrites() {

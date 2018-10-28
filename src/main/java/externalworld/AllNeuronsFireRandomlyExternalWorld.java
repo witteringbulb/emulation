@@ -1,7 +1,7 @@
 package externalworld;
 
 import network.Brain;
-import neuron.ExternalInputNeuron;
+import neuron.Neuron;
 
 public class AllNeuronsFireRandomlyExternalWorld extends ExternalWorld {
 
@@ -16,12 +16,12 @@ public class AllNeuronsFireRandomlyExternalWorld extends ExternalWorld {
 
     @Override
     public void coordinateSensoryNeuronFiringThisTimeStep() {
-        for (ExternalInputNeuron neuron : this.getBrain().getInputNeurons()) {
+        for (Neuron neuron : this.getBrain().getInputNeurons()) {
             fireNeuronIfRequired(neuron);
         }
     }
 
-    private void fireNeuronIfRequired(ExternalInputNeuron neuron) {
+    private void fireNeuronIfRequired(Neuron neuron) {
         if (Math.random() < chanceToFirePerNeuronPerTimestep) {
             neuron.getAxon().fire(firingAmplitude);
         }

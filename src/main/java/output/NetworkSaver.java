@@ -1,6 +1,6 @@
 package output;
 
-import neuron.InternalNeuron;
+import neuron.Neuron;
 import neuron.branch.Branch;
 
 import java.io.File;
@@ -10,10 +10,10 @@ import java.util.stream.Collectors;
 
 public class NetworkSaver {
 
-    private List<InternalNeuron> neurons;
+    private List<Neuron> neurons;
     private String pathToSaveDirectory;
 
-    public NetworkSaver(List<InternalNeuron> neurons, String pathToSaveDirectory) {
+    public NetworkSaver(List<Neuron> neurons, String pathToSaveDirectory) {
         this.neurons = neurons;
         this.pathToSaveDirectory = pathToSaveDirectory;
     }

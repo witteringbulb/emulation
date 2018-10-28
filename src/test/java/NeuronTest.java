@@ -1,4 +1,4 @@
-import neuron.InternalNeuron;
+import neuron.Neuron;
 import neuron.branch.Axon;
 import neuron.branch.AxonTerminal;
 import neuron.builders.AxonTerminalBuilder;
@@ -18,7 +18,7 @@ class NeuronTest {
 
     private final double deviationThreshold = 0.001;
 
-    private InternalNeuron neuron;
+    private Neuron neuron;
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
@@ -39,7 +39,7 @@ class NeuronTest {
         Axon axon = new Axon(soma.getSomaLocation(), new double[]{1.0, 4.5}, SignalType.SQUARE_SIGNAL_DEFAULT);
         axon.setAxonTerminals(axonTerminals);
 
-        neuron = new InternalNeuron(soma, axon, false);
+        neuron = new Neuron(soma, axon, false);
 
     }
 

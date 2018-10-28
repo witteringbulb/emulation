@@ -53,7 +53,7 @@ public abstract class Branch {
     }
 
     public double getSignalMagnitudeAtEndOfBranch() {
-        return signals.stream().mapToDouble(signal -> signal.getSignalStrengthAtLocation(this.getLength())).sum();
+            return signals.stream().mapToDouble(signal -> signal.getSignalStrengthAtLocation(this.getLength())).sum();
     }
 
     public double[] getCoordinatesOfBranchBeginning() {

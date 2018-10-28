@@ -1,5 +1,5 @@
 import defaults.DefaultValues;
-import neuron.InternalNeuron;
+import neuron.Neuron;
 import neuron.branch.Axon;
 import neuron.branch.BranchIdGeneratorStatic;
 import neuron.branch.Dendrite;
@@ -21,9 +21,9 @@ import java.util.List;
 
 class TwoNeuronSystemForBlogPostTest {
 
-    private InternalNeuron neuron1;
-    private InternalNeuron neuron2;
-    private List<InternalNeuron> neuronPop;
+    private Neuron neuron1;
+    private Neuron neuron2;
+    private List<Neuron> neuronPop;
     private SignalSaver signalSaver;
     private NetworkSaver networkSaver;
 
@@ -45,8 +45,8 @@ class TwoNeuronSystemForBlogPostTest {
         Soma soma2 = new HeavisideSoma(new double[]{1.0, 3.0}, 0.7);
         Axon axon2 = new Axon(soma2.getSomaLocation(), new double[]{1.0, 0.0}, SignalType.SQUARE_SIGNAL_DEFAULT);
 
-        neuron1 = new InternalNeuron(soma1, axon1, false);
-        neuron2 = new InternalNeuron(soma2, axon2, false);
+        neuron1 = new Neuron(soma1, axon1, false);
+        neuron2 = new Neuron(soma2, axon2, false);
 
         neuron1.getSoma().setDendrites(
                 new BranchGenerator(neuron1.getSoma().getSomaLocation(), Dendrite.class, signalType)
@@ -64,7 +64,7 @@ class TwoNeuronSystemForBlogPostTest {
             neuron1.getAxon().addAxonTerminalConnectionToDendrite(dendrite, 1);
         }
 
-        neuronPop = new ArrayList<InternalNeuron>();
+        neuronPop = new ArrayList<Neuron>();
         neuronPop.add(neuron1);
         neuronPop.add(neuron2);
         networkSaver = new NetworkSaver(neuronPop, saveDirectory);

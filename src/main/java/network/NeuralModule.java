@@ -1,6 +1,6 @@
 package network;
 
-import neuron.InternalNeuron;
+import neuron.Neuron;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,17 +17,19 @@ public class NeuralModule {
         this.centre = centre;
         this.radius = radius;
         this.networkModuleDesigner = new NetworkModuleDesigner(numberOfNeurons, centre, radius);
-        this.connectedModules = new HashMap<NeuralModule, Integer>();
     }
 
     public void addConnectedModule(NeuralModule module, int numberOfInterModuleNeurons) {
         if (numberOfInterModuleNeurons <= 0) {
             throw new IllegalArgumentException("Can't connect a negative number of neurons");
         }
+        if (this.connectedModules == null) {
+            this.connectedModules = new HashMap<NeuralModule, Integer>();
+        }
         this.connectedModules.put(module, numberOfInterModuleNeurons);
     }
 
-    public List<InternalNeuron> designDisconnectedModuleInternalNetwork(){
+    public List<Neuron> designDisconnectedModuleInternalNetwork(){
         return this.networkModuleDesigner.designNewDisconnectedNetwork();
     }
 

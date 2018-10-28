@@ -1,7 +1,6 @@
 package network;
 
 import defaults.DefaultValues;
-import neuron.InternalNeuron;
 import neuron.Neuron;
 import neuron.branch.Dendrite;
 import neuron.builders.DendriteBuilder;
@@ -21,10 +20,10 @@ public class NetworkDesignerStatic {
     private static double maxLengthOfAxonTerminals = 1.0;
     private static double averageNumberOfAxonTerminals = 20.0;
     private static double widthOfAxonTerminalNumberDistribution = 10.0;
-    private static double averageNumberOfDendrites = 40.0;
+    private static double averageNumberOfDendrites = 60.0;
     private static double widthOfDendriteNumberDistribution = 15.0;
-    private static double averageLengthOfDendrites = 1.5;
-    private static double widthOfDendriteLengthsDistribution = 0.5;
+    private static double averageLengthOfDendrites = 2.5;
+    private static double widthOfDendriteLengthsDistribution = 1.0;
     private static double ratioExcitatoryToInhibitoryNeurons = 0.7;
     private static SignalType signalType = DefaultValues.DEFAULT_SIGNAL_TYPE;
     private static double somaFiringThreshold = DefaultValues.DEFAULT_SOMA_FIRE_THRESH;
@@ -71,12 +70,12 @@ public class NetworkDesignerStatic {
         return (Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2)) < maxLengthOfAxonTerminals);
     }
 
-    private static List<Integer> prepareNeuronIndices(List<InternalNeuron> network) {
+    private static List<Integer> prepareNeuronIndices(List<Neuron> network) {
         List<Integer> neuronIndices = new ArrayList<Integer>();
         long maxNumberOfAxonTerminals = Math.round(averageNumberOfAxonTerminals + 0.5 * widthOfAxonTerminalNumberDistribution);
         long minNumberOfAxonTerminals = Math.round(averageNumberOfAxonTerminals - 0.5 * widthOfAxonTerminalNumberDistribution);
         int neuronIndex = 0;
-        for (InternalNeuron neuron : network) {
+        for (Neuron neuron : network) {
             //Roll a 0, should get minimum number of axon terminals. Roll 0.5, should get avg. Roll 1, max
             long numberOfAxonTerminals = Math.round(minNumberOfAxonTerminals + Math.random() * (maxNumberOfAxonTerminals - minNumberOfAxonTerminals));
             for (int i = 0; i < numberOfAxonTerminals; i++) {

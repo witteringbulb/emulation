@@ -7,8 +7,8 @@ public class DefaultValues {
 
     //Signals
     public static final double DEFAULT_SIGNAL_AMPLITUDE = 0.4;
-    public static final double DEFAULT_SIGNAL_WIDTH = 0.5;
-    public static final double DEFAULT_SIGNAL_SPEED = 0.05;
+    public static final double DEFAULT_SIGNAL_WIDTH = 0.2;
+    public static final double DEFAULT_SIGNAL_SPEED = 0.2;
     public static final double DEFAULT_ZERO_SIGNAL_THRESH = 0.1;
     public static final SignalType DEFAULT_SIGNAL_TYPE = SignalType.SQUARE_SIGNAL_DEFAULT;
 
